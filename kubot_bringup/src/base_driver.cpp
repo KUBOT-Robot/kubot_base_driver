@@ -343,6 +343,7 @@ void BaseDriver::update_imu()
 {
     frame->interact(ID_GET_IMU_DATA);
     raw_imu_msgs.header.stamp = ros::Time::now();
+
     raw_imu_msgs.raw_linear_acceleration.x = Data_holder::get()->imu_data[0];
     raw_imu_msgs.raw_linear_acceleration.y = Data_holder::get()->imu_data[1];
     raw_imu_msgs.raw_linear_acceleration.z= Data_holder::get()->imu_data[2];
@@ -361,20 +362,17 @@ void BaseDriver::update_robot_status()
 {
     frame->interact(ID_GET_ROBOT_STATUS);
     raw_robot_status.header.stamp = ros::Time::now();
-    raw_robot_status.bumper_status = Data_holder::get()->robot_status.bumper_status;
-    BaseDriver::s101=Data_holder::get()->robot_status.sona_data[0];
-    BaseDriver::s102=Data_holder::get()->robot_status.sona_data[1];
-    BaseDriver::s201=Data_holder::get()->robot_status.sona_data[2];
-    BaseDriver::s202=Data_holder::get()->robot_status.sona_data[3];
-    BaseDriver::s301=Data_holder::get()->robot_status.sona_data[4];
-    BaseDriver::s302=Data_holder::get()->robot_status.sona_data[5];
-    BaseDriver::s401=Data_holder::get()->robot_status.sona_data[6];
-    BaseDriver::s402=Data_holder::get()->robot_status.sona_data[7];
 
-    raw_robot_status.sona1_dis = (BaseDriver::s101*256)+BaseDriver::s102;
-    raw_robot_status.sona2_dis = (BaseDriver::s201*256)+BaseDriver::s202;
-    raw_robot_status.sona3_dis = (BaseDriver::s301*256)+BaseDriver::s302;
-    raw_robot_status.sona4_dis = (BaseDriver::s401*256)+BaseDriver::s402;
+    raw_robot_status.bumper_status = Data_holder::get()->robot_status.bumper_status;
+    raw_robot_status.sona1_dis = Data_holder::get()->robot_status.sona_data[0];
+    raw_robot_status.sona2_dis = Data_holder::get()->robot_status.sona_data[1];
+    raw_robot_status.sona3_dis = Data_holder::get()->robot_status.sona_data[2];
+    raw_robot_status.sona4_dis = Data_holder::get()->robot_status.sona_data[3];
+    raw_robot_status.sona5_dis = Data_holder::get()->robot_status.sona_data[4];
+    raw_robot_status.sona6_dis = Data_holder::get()->robot_status.sona_data[5];
+    raw_robot_status.sona7_dis = Data_holder::get()->robot_status.sona_data[6];
+    raw_robot_status.sona8_dis = Data_holder::get()->robot_status.sona_data[7];
+
     raw_robot_status_msgs.publish(raw_robot_status);
 }
 
