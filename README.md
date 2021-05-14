@@ -15,9 +15,8 @@
 - [ ] kubot_bringup
 	- [ ] bringup.launch
 	- [ ] bringup_with_ekf.launch
-	- [ ] bringup_smoother.launch
+	- [X] bringup_smoother.launch
 	- [ ] robot.launch
-	- [ ] robot_with_ekf.launch
 - [ ] kubot_imu
 - [ ] kubot_msgs
 

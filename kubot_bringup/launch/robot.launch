@@ -7,7 +7,7 @@
   <arg name="sensor" default="$(env KUBOT_3DSENSOR)" doc="model type [non-3dsensor, xtion, astra, kinectV1, kinectV2, d435i]"/>
 
 	<!-- KUBOT DRIVER -->
-	<include if    ="$(arg use_imu)" file="$(find kubot_bringup)/launch/bringup_with_imu.launch"/>
+	<include if    ="$(arg use_imu)" file="$(find kubot_bringup)/launch/bringup_with_ekf.launch"/>
 	<include unless="$(arg use_imu)" file="$(find kubot_bringup)/launch/bringup.launch">
 		<arg name="publish_tf"              value="$(arg use_odom)" /> 
 	</include>
