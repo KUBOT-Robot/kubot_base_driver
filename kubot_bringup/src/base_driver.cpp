@@ -64,7 +64,7 @@ BaseDriver::BaseDriver() : pn("~"), bdg(pn)
 
  //TODO   init_led_status();
 
-  init_robot_status();
+    init_robot_status();
 
 }
 
@@ -207,8 +207,8 @@ void BaseDriver::led_status_callback(const kubot_msgs::RawLed& led_status)
 
 void BaseDriver::init_robot_status()
 {
-    raw_robot_status_msgs = nh.advertise<kubot_msgs::RawRobot>("raw_robot_status", 50);
-    raw_robot_status.header.frame_id = "robot_snesor";
+    raw_robot_status_pub = nh.advertise<kubot_msgs::RawRobot>("raw_robot_status_msgs", 50);
+    raw_robot_status_msgs.header.frame_id = "robot_snesor";
 }
 
 
@@ -357,22 +357,27 @@ void BaseDriver::update_imu()
     raw_imu_pub.publish(raw_imu_msgs);
 }
 
-
 void BaseDriver::update_robot_status()
 {
     frame->interact(ID_GET_ROBOT_STATUS);
-    raw_robot_status.header.stamp = ros::Time::now();
+    raw_robot_status_msgs.header.stamp = ros::Time::now();
 
-    raw_robot_status.bumper_status = Data_holder::get()->robot_status.bumper_status;
-    raw_robot_status.sona1_dis = Data_holder::get()->robot_status.sona_data[0];
-    raw_robot_status.sona2_dis = Data_holder::get()->robot_status.sona_data[1];
-    raw_robot_status.sona3_dis = Data_holder::get()->robot_status.sona_data[2];
-    raw_robot_status.sona4_dis = Data_holder::get()->robot_status.sona_data[3];
-    raw_robot_status.sona5_dis = Data_holder::get()->robot_status.sona_data[4];
-    raw_robot_status.sona6_dis = Data_holder::get()->robot_status.sona_data[5];
-    raw_robot_status.sona7_dis = Data_holder::get()->robot_status.sona_data[6];
-    raw_robot_status.sona8_dis = Data_holder::get()->robot_status.sona_data[7];
+    raw_robot_status_msgs.bumper_status = Data_holder::get()->robot_status.bumper_status;
 
-    raw_robot_status_msgs.publish(raw_robot_status);
+    if (bdg.mcu_battery_volatge)
+    {
+        raw_robot_status_msgs.mcu_volate = Data_holder::get()->mcu_voltage.mcu_voltage;
+    }
+
+    raw_robot_status_msgs.sona1_dis = Data_holder::get()->robot_status.sona_data[0];
+    raw_robot_status_msgs.sona2_dis = Data_holder::get()->robot_status.sona_data[1];
+    raw_robot_status_msgs.sona3_dis = Data_holder::get()->robot_status.sona_data[2];
+    raw_robot_status_msgs.sona4_dis = Data_holder::get()->robot_status.sona_data[3];
+    raw_robot_status_msgs.sona5_dis = Data_holder::get()->robot_status.sona_data[4];
+    raw_robot_status_msgs.sona6_dis = Data_holder::get()->robot_status.sona_data[5];
+    raw_robot_status_msgs.sona7_dis = Data_holder::get()->robot_status.sona_data[6];
+    raw_robot_status_msgs.sona8_dis = Data_holder::get()->robot_status.sona_data[7];
+
+    raw_robot_status_pub.publish(raw_robot_status_msgs);
 }
 

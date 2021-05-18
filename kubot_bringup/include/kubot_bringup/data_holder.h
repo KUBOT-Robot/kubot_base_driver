@@ -143,6 +143,11 @@ struct Robot_lcd_status
     char robot_ip[16]; //設定顯示於下位機之機器人ip
 };
 
+struct Robot_mcu_voltage
+{
+    unsigned short mcu_voltage; // 下位機電壓
+};
+
 #pragma pack(0)
 
 class Data_holder
@@ -171,6 +176,7 @@ private:
         memset(&robot_status, 0, sizeof(struct Robot_status));
         //TODO            memset(&led_status, 0, sizeof(struct Robot_led_status));
         memset(&lcd_status, 0, sizeof(struct Robot_lcd_status));
+        memset(&mcu_voltage,0,sizeof(struct Robot_mcu_voltage));
         memset(&imu_data, 0, sizeof(imu_data));
     }
 
@@ -183,7 +189,11 @@ public:
     //TODO        struct Robot_led_status led_status;
     struct Robot_status robot_status;
     struct Robot_lcd_status lcd_status;
-
+    struct Robot_mcu_voltage mcu_voltage;
+    {
+        /* data */
+    };
+    
     float imu_data[9];
 };
 #endif

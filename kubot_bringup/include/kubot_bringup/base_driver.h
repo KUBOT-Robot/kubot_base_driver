@@ -125,16 +125,8 @@ private:
 private: 
   void init_robot_status();
   void update_robot_status();
-  kubot_msgs::RawRobot raw_robot_status;
-  ros::Publisher raw_robot_status_msgs;
-  unsigned char s101;
-  unsigned char s102;
-  unsigned char s201;
-  unsigned char s202;
-  unsigned char s301;
-  unsigned char s302;
-  unsigned char s401;
-  unsigned char s402;
+  kubot_msgs::RawRobot raw_robot_status_msgs;
+  ros::Publisher raw_robot_status_pub;
 };
 
 #endif

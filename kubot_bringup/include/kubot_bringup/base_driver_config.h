@@ -51,6 +51,7 @@ class BaseDriverConfig
             int32_t freq;
 
             bool out_pid_debug_enable;
+            bool mcu_battery_volatge;
  //TODO           bool led_status_control_enable;
 
       private:

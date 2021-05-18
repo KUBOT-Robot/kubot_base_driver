@@ -13,7 +13,9 @@
         <param name="odom_topic" value="odom" if="$(arg publish_tf)"/>
         <param name="odom_topic" value="wheel_odom" unless="$(arg publish_tf)" /> 
         <param name="out_pid_debug_enable" value="true" />
-        <param name="led_status_control_enable" value="false"/>
+        <param name="mcu_battery_volatge" value="true"/>
+<!--      <param name="led_status_control_enable" value="false"/>
+-->  
         <param name="port" value="/dev/kubot" />
         <param name="publish_tf" value="$(arg publish_tf)" />
     </node>

@@ -1,5 +1,6 @@
 Header header
 bool bumper_status
+uint8 mcu_voltage
 uint8 sona1_dis
 uint8 sona2_dis
 uint8 sona3_dis
