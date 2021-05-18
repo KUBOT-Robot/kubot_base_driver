@@ -366,7 +366,7 @@ void BaseDriver::update_robot_status()
 
     if (bdg.mcu_battery_volatge)
     {
-        raw_robot_status_msgs.mcu_volate = Data_holder::get()->mcu_voltage.mcu_voltage;
+        raw_robot_status_msgs.mcu_voltage = Data_holder::get()->mcu_voltage.mcu_voltage;
     }
 
     raw_robot_status_msgs.sona1_dis = Data_holder::get()->robot_status.sona_data[0];

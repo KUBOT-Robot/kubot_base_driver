@@ -35,7 +35,7 @@ void BaseDriverConfig::init(Robot_parameter* r)
 	pn.param<bool>("out_pid_debug_enable", out_pid_debug_enable, false);
 	ROS_INFO("[KUBOT]out_pid_debug_enable:%d", out_pid_debug_enable);
 	pn.param<bool>("mcu_battery_volatge", mcu_battery_volatge, false);
-	ROS_INFO("[KUBOT]mcu_battery_voltage", mcu_battery_volatge, false);	
+	ROS_INFO("[KUBOT]mcu_battery_voltage:%d", mcu_battery_volatge);	
 //TODO 	pn.param<bool>("led_status_control_enable", led_status_control_enable, true);
 //TODO 	ROS_INFO("led_status_control_enable:%d", led_status_control_enable);
 
