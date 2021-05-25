@@ -2,18 +2,20 @@
     <arg name="driver_baudrate" default="$(env KUBOT_DRIVER_BAUDRATE)"  doc="kubot driver baudrate"/>
     <arg name="use_mag" default="false"  doc="use mag in kubot imu"/>
     <arg name="use_madgwick" default="true"  doc="use madgwick filter in kubot imu"/>
-    <arg name="_robot_ip" default="$(env ROS_IP)" doc = "kubot driver _robot_ip" />
+    <arg name="robot_ip" default="$(env ROS_IP)" doc = "kubot driver _robot_ip" />
 
 	<!-- KUBOT DRIVER -->
     <node name="kubot_driver" pkg="kubot_bringup" type="kubot_driver" output="screen">
-        <param name="base_frame" value="base_link" />
+        <param name="base_frame" value="footprint" />
         <param name="baudrate" value="$(arg driver_baudrate)" />
-         <param name="robot_ip" value="$(arg _robot_ip)" />
+         <param name="robot_ip" value="$(arg robot_ip)" />
         <param name="cmd_vel_topic" value="cmd_vel" />
         <param name="odom_frame" value="odom" />
         <param name="odom_topic" value="wheel_odom" />
         <param name="out_pid_debug_enable" value="true" />
-        <param name="led_status_control_enable" value="false"/>
+        <param name="mcu_battery_volatge" value="true"/>
+<!--      <param name="led_status_control_enable" value="false"/>
+-->  
         <param name="port" value="/dev/kubot" />
         <param name="publish_tf" value="false" />
     </node>

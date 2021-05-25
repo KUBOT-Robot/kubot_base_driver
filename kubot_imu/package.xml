@@ -2,13 +2,15 @@
 <package format="2">
   <name>kubot_imu</name>
   <version>0.0.0</version>
-  <description>The kubot_imu package</description>
+  <description>
+  The kubot_imu package
+  </description>
 
   <author>KUBOT</author>
   <!-- KUBOT ROS  -->
-  <maintainer email="YunHong.Wang@ShaYangYe.com">Yun-Hong</maintainer>
+  <maintainer email="t105408001@ntut.org.tw">Yun-Hong</maintainer>
 
-  <license>TODO</license>
+  <license>Apache-2.0</license>
 
   <buildtool_depend>catkin</buildtool_depend>
   <buildtool_depend>kubot_msgs</buildtool_depend>

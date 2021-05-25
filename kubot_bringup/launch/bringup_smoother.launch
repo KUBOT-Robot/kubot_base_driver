@@ -3,7 +3,7 @@
         <rosparam file="$(find kubot_bringup)/params/base_params.yaml" command="load"/>
     </node>
 
-  <arg name="model" default="$(env KUBOT_MODEL)" doc="model type [kubot2, wagv, aider ,neuronbot2 ,galiray2]"/>
+    <arg name="model" default="$(env KUBOT_MODEL)" doc="model type [kubot2, wagv, aider ,neuronbot2 ,galiray2]"/>
     
     <arg name="node_name"             value="velocity_smoother"/>
     <arg name="nodelet_manager_name"  value="nodelet_manager"/>
