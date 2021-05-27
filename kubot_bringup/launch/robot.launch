@@ -1,5 +1,5 @@
 <launch>
-	<arg name="use_imu" default="false" doc="use imu in kubot base"/>
+	<arg name="use_imu" default="true" doc="use imu in kubot base"/>
 	<arg name="use_odom" default="true" doc="use odom in kubot base"/>
 
   	<arg name="model" default="$(env KUBOT_MODEL)" doc="model type [kubot2, wagv, aider ,neuronbot2 ,galiray2]"/>
@@ -22,5 +22,10 @@
   	<include  file="$(find kubot_3dsensor)/launch/$(arg sensor).launch"/>
 
 	<!-- LIDAR FILTER -->
-	<include file="$(find kubot_lidar)/launch/lidar_filter.launch"/>
+  	<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+    	<arg name="time" value="2" />
+    	<arg name="pkg" value="kubot_lidar" />
+    	<arg name="file" value="lidar_filter.launch" />
+    	<arg name="node_name" value="timed_roslaunch" />
+  	</include>
 </launch>
