@@ -3,7 +3,7 @@
     <arg name="publish_tf" default="true"  doc="kubot driver publish_tf"/>
     <arg name="robot_ip" default="$(env ROS_IP)" doc = "kubot driver robot_ip" />
 
-	<!-- KUBOT DRIVER -->
+<!-- KUBOT DRIVER -->
     <node name="kubot_driver" pkg="kubot_bringup" type="kubot_driver" output="screen">
         <param name="base_frame" value="footprint" />
         <param name="baudrate" value="$(arg driver_baudrate)" />

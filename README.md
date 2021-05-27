@@ -10,13 +10,16 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 ## Introduction
+Start the robot's MCU computer roslaunch to generate basic motion control messages for the KOBOT robot.
 
 ## Repository Contents
 - [ ] kubot_bringup
 	- [ ] bringup.launch
 	- [ ] bringup_with_ekf.launch
-	- [X] bringup_smoother.launch
 	- [ ] robot.launch
 - [ ] kubot_imu
 - [ ] kubot_msgs
+	- [ ] RawImu.msg
+	- [ ] RawLed.msg
+	- [ ] RawRobot.msg
 
