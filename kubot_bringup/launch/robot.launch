@@ -20,7 +20,7 @@
 
 <!-- 3D SENSOR -->
   	<include  file="$(find kubot_3dsensor)/launch/$(arg sensor).launch"/>
-  	<node pkg="web_video_server" type="web_video_server" name="web_video_server" unless="$(eval arg('3dsensor') == 'non-3dsensor')"/>
+  	<node pkg="web_video_server" type="web_video_server" name="web_video_server" unless="$(eval arg('sensor') == 'non-3dsensor')"/>
 
 <!-- LIDAR FILTER need delay 2ms-->
   	<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
