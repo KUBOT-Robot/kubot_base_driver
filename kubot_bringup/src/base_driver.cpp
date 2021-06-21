@@ -30,11 +30,11 @@ BaseDriver::BaseDriver() : pn("~"), bdg(pn)
 	ROS_INFO("[KUBOT]base driver startup...");
 	if (trans->init())
 	{
-		ROS_INFO("[KUBOT]connected to main board");
+		ROS_INFO("[KUBOT]connected to driver board");
 	}
 	else
 	{
-		ROS_ERROR("[KUBOT]oops!!! can't connect to main board, please check the usb connection or baudrate!");
+		ROS_ERROR("[KUBOT]oops!!! can't connect to driver board, please check the usb connection or baudrate!");
 		return;
 	}
 
@@ -123,6 +123,17 @@ void BaseDriver::init_cmd_odom()
 	//correct_pos_sub = nh.subscribe("correct_pos", 1000, &BaseDriver::correct_pos_callback, this);
 }
 
+void BaseDriver::cmd_vel_callback(const geometry_msgs::Twist& vel_cmd)
+{
+	ROS_INFO_STREAM("cmd_vel:[" << vel_cmd.linear.x << " " << vel_cmd.linear.y << " " << vel_cmd.angular.z << "]");
+
+	Data_holder::get()->velocity.v_liner_x = vel_cmd.linear.x * 100;
+	Data_holder::get()->velocity.v_liner_y = vel_cmd.linear.y * 100;
+	Data_holder::get()->velocity.v_angular_z = vel_cmd.angular.z * 100;
+
+	need_update_speed = true;
+}
+
 void BaseDriver::init_pid_debug()
 {
 	if (bdg.out_pid_debug_enable)
@@ -137,15 +148,6 @@ void BaseDriver::init_pid_debug()
 	}
 }
 
-void BaseDriver::init_imu()
-{
-	raw_imu_pub = nh.advertise<kubot_msgs::RawImu>("raw_imu", 50);
-	raw_imu_msgs.header.frame_id = "imu_link";
-	raw_imu_msgs.accelerometer = true;
-	raw_imu_msgs.gyroscope = true;
-	raw_imu_msgs.magnetometer = true;
-}
-
 void BaseDriver::read_param()
 {
 	Robot_parameter* param = &Data_holder::get()->parameter;
@@ -158,15 +160,13 @@ void BaseDriver::read_param()
 	bdg.SetRobotParameters();
 }
 
-void BaseDriver::cmd_vel_callback(const geometry_msgs::Twist& vel_cmd)
+void BaseDriver::init_imu()
 {
-	ROS_INFO_STREAM("cmd_vel:[" << vel_cmd.linear.x << " " << vel_cmd.linear.y << " " << vel_cmd.angular.z << "]");
-
-	Data_holder::get()->velocity.v_liner_x = vel_cmd.linear.x * 100;
-	Data_holder::get()->velocity.v_liner_y = vel_cmd.linear.y * 100;
-	Data_holder::get()->velocity.v_angular_z = vel_cmd.angular.z * 100;
-
-	need_update_speed = true;
+	raw_imu_pub = nh.advertise<kubot_msgs::RawImu>("raw_imu", 50);
+	raw_imu_msgs.header.frame_id = "imu_link";
+	raw_imu_msgs.accelerometer = true;
+	raw_imu_msgs.gyroscope = true;
+	raw_imu_msgs.magnetometer = true;
 }
 
 void BaseDriver::init_robot_status()
