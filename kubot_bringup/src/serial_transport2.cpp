@@ -1,9 +1,10 @@
 #include "serial_transport2.h"
 #include <ros/ros.h>
 
-Serial_transport2::Serial_transport2(std::string port, int32_t baudrate) : m_port(port), m_baudrate(baudrate), m_timeout_us(150 * 1000)
+Serial_transport2::Serial_transport2(std::string port, int32_t baudrate) : m_port(port), m_baudrate(baudrate), m_timeout_us(150 * 1000), m_warning_us(150 * 1000)
 {
 	m_timeoutFlag = false;
+	m_warningFlag = false;
 }
 
 Serial_transport2::~Serial_transport2()
@@ -95,6 +96,7 @@ Buffer Serial_transport2::read()
 	struct timeval tm;
 	tm.tv_sec = 0;
 	tm.tv_usec = m_timeout_us;
+	tm.tv_usec = m_warning_us;
 
 	int retval = select(m_fd + 1, &rfds, NULL, NULL, &tm);
 	if (retval == -1 && errno == EINTR) {
@@ -143,7 +145,19 @@ void Serial_transport2::set_timeout(int t)
 	m_timeout_us = t * 1000;
 }
 
+void Serial_transport2::set_warning(int t)
+{
+	m_timeout_us = t * 1000;
+}
+
 bool Serial_transport2::is_timeout()
+{
+	bool timeout = m_timeoutFlag;
+	m_timeoutFlag = false;
+	return timeout;
+}
+
+bool Serial_transport2::is_warning()
 {
 	bool timeout = m_timeoutFlag;
 	m_timeoutFlag = false;

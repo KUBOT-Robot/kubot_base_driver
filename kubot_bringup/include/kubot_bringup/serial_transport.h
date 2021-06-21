@@ -40,7 +40,9 @@ public:
 
 	bool init();
 	void set_timeout(int t);
+	void set_warning(int t);	
 	bool is_timeout();
+	bool is_warning();
 	Buffer read();
 
 	void write(Buffer& data);

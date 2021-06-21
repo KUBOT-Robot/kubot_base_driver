@@ -129,7 +129,17 @@ void Serial_transport::set_timeout(int t)
 	timer_->expires_from_now(boost::posix_time::millisec(t));
 }
 
+void Serial_transport::set_warning(int t)
+{
+	timer_->expires_from_now(boost::posix_time::millisec(t));
+}
+
 bool Serial_transport::is_timeout()
+{
+	return timer_->expires_from_now().is_negative();
+}
+
+bool Serial_transport::is_warning()
 {
 	return timer_->expires_from_now().is_negative();
 }

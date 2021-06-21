@@ -17,6 +17,7 @@ Simple_dataframe::~Simple_dataframe()
 bool Simple_dataframe::init()
 {
 	trans->set_timeout(500);
+	trans->set_warning(500);
 	return true;
 }
 
@@ -190,7 +191,8 @@ bool Simple_dataframe::interact(const MESSAGE_ID id)
 bool Simple_dataframe::recv_proc()
 {
 	int i = 0;
-	trans->set_timeout(150);
+	trans->set_timeout(250);
+	trans->set_warning(150);
 	bool got = false;
 
 	while (true) {
@@ -209,6 +211,11 @@ bool Simple_dataframe::recv_proc()
 
 		if (trans->is_timeout()) {
 			ROS_WARN("timeout");
+			return false;
+		}
+
+		if (trans->is_warning()) {
+			ROS_WARN("WARNING");
 			return false;
 		}
 

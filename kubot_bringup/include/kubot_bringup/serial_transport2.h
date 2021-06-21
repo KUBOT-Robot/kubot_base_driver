@@ -14,13 +14,19 @@ public:
 	void write(Buffer& data);
 
 	void set_timeout(int t);
+	void set_warning(int t);
 	bool is_timeout();
+	bool is_warning();
+
 private:
 	void mainRun();
 
 	unsigned long m_timeout_us;
-
 	bool m_timeoutFlag;
+
+	unsigned long m_warning_us;
+	bool m_warningFlag;
+
 	int m_fd;
 	std::string m_port;
 	int32_t m_baudrate;
