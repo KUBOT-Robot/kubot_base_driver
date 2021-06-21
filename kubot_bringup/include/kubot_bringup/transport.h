@@ -19,7 +19,9 @@ public:
 	virtual ~Transport() {}
 	virtual bool init() = 0;
 	virtual void set_timeout(int t) = 0;
+	virtual void set_warning(int t) = 0;
 	virtual bool is_timeout() = 0;
+	virtual bool is_warning() = 0;
 	virtual Buffer read() = 0;
 
 	virtual void write(Buffer &data) = 0;
