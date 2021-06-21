@@ -156,15 +156,3 @@ bool Serial_transport2::is_timeout()
 	m_timeoutFlag = false;
 	return timeout;
 }
-
-void Serial_transport2::set_warning(int t)
-{
-	m_warning_us = t * 1000;
-}
-
-bool Serial_transport2::is_warning()
-{
-	bool warning = m_warningFlag;
-	m_warningFlag = false;
-	return warning;
-}

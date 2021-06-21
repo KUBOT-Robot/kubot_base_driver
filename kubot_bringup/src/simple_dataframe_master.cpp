@@ -17,7 +17,6 @@ Simple_dataframe::~Simple_dataframe()
 bool Simple_dataframe::init()
 {
 	trans->set_timeout(500);
-	trans->set_warning(500);
 	return true;
 }
 
@@ -198,7 +197,6 @@ bool Simple_dataframe::recv_proc()
 {
 	int i = 0;
 	trans->set_timeout(250);
-	trans->set_warning(150);
 
 	bool got = false;
 	while (true)
@@ -223,12 +221,6 @@ bool Simple_dataframe::recv_proc()
 			ROS_WARN("timeout");
 			return false;
 		}
-
-		if (trans->is_warning())
-		{
-			ROS_WARN("WARNING");
-			return false;
-		}		
 
 #ifdef USE_BOOST_SERIAL_TRANSPORT
 		usleep(1000);

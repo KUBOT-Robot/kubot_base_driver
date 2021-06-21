@@ -62,8 +62,6 @@ BaseDriver::BaseDriver() : pn("~"), bdg(pn)
 
 	init_imu();
 
-	//TODO   init_led_status();
-
 	init_robot_status();
 
 }
