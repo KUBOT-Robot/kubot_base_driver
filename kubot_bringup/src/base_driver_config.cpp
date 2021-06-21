@@ -3,7 +3,7 @@
 
 #define PI 3.1415926f
 
-BaseDriverConfig::BaseDriverConfig(ros::NodeHandle &p) : pn(p)
+BaseDriverConfig::BaseDriverConfig(ros::NodeHandle& p) : pn(p)
 {
 #ifdef USE_DYNAMIC_RECONFIG
 	param_update_flag = false;
@@ -13,10 +13,10 @@ BaseDriverConfig::BaseDriverConfig(ros::NodeHandle &p) : pn(p)
 
 BaseDriverConfig::~BaseDriverConfig()
 {
-    
+
 }
 
-void BaseDriverConfig::init(Robot_parameter* r) 
+void BaseDriverConfig::init(Robot_parameter* r)
 {
 	rp = r;
 
@@ -35,23 +35,20 @@ void BaseDriverConfig::init(Robot_parameter* r)
 	pn.param<bool>("out_pid_debug_enable", out_pid_debug_enable, false);
 	ROS_INFO("[KUBOT]out_pid_debug_enable:%d", out_pid_debug_enable);
 	pn.param<bool>("mcu_battery_volatge", mcu_battery_volatge, false);
-	ROS_INFO("[KUBOT]mcu_battery_voltage:%d", mcu_battery_volatge);	
-//TODO 	pn.param<bool>("led_status_control_enable", led_status_control_enable, true);
-//TODO 	ROS_INFO("led_status_control_enable:%d", led_status_control_enable);
+	ROS_INFO("[KUBOT]mcu_battery_voltage:%d", mcu_battery_volatge);
 
 	//topic name param
 	pn.param<std::string>("cmd_vel_topic", cmd_vel_topic, "cmd_vel");
-	pn.param<std::string>("odom_topic", odom_topic, "odom");	
-//TODO	pn.param<std::string>("led_status_topic", led_status_topic, "led_status");
+	pn.param<std::string>("odom_topic", odom_topic, "odom");
 	pn.param<std::string>("robot_status_topic", robot_status_topic, "robot_status");
 
 	pn.param<int32_t>("freq", freq, 1000);
 }
 
-void BaseDriverConfig::SetRobotParameters() 
+void BaseDriverConfig::SetRobotParameters()
 {
 #ifdef USE_DYNAMIC_RECONFIG
-	static bool flag=true;
+	static bool flag = true;
 	if (flag) {
 		flag = false;
 		f = boost::bind(&BaseDriverConfig::dynamic_callback, this, _1, _2);
@@ -61,7 +58,7 @@ void BaseDriverConfig::SetRobotParameters()
 }
 
 #ifdef USE_DYNAMIC_RECONFIG
-void BaseDriverConfig::dynamic_callback(kubot_bringup::kubot_driverConfig &config, uint32_t level)
+void BaseDriverConfig::dynamic_callback(kubot_bringup::kubot_driverConfig& config, uint32_t level)
 {
 	if (set_flag) {
 		set_flag = false;
@@ -101,14 +98,14 @@ void BaseDriverConfig::dynamic_callback(kubot_bringup::kubot_driverConfig &confi
 	rp->model_type = config.model_type;
 	rp->sona_distance = config.sona_distance;
 
-    Data_holder::dump_params(rp);
+	Data_holder::dump_params(rp);
 
 	param_update_flag = true;
 }
 
 bool BaseDriverConfig::get_param_update_flag()
 {
-	bool tmp=param_update_flag;
+	bool tmp = param_update_flag;
 	param_update_flag = false;
 
 	return tmp;

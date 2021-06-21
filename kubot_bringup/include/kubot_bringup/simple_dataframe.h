@@ -1,5 +1,5 @@
 #ifndef  KUBOT_SIMPLE_DATAFRAME_H_
-#define PIBOT_SIMPLE_DATAFRAME_H_
+#define  KUBOT_SIMPLE_DATAFRAME_H_
 
 #include "dataframe.h"
 #include <string.h>

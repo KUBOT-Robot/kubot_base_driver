@@ -1,13 +1,13 @@
 #include <ros/ros.h>
 #include "kubot_bringup/base_driver.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    ros::init(argc, argv, "kubot_driver");
-    
-    BaseDriver::Instance()->work_loop();
+	ros::init(argc, argv, "kubot_driver");
 
-    ros::spin();
+	BaseDriver::Instance()->work_loop();
 
-    return 0;
+	ros::spin();
+
+	return 0;
 }
