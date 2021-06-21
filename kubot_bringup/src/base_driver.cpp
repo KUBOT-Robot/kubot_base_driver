@@ -4,7 +4,7 @@
 
 #include <std_msgs/Float32MultiArray.h>
 #include <boost/assign/list_of.hpp>
-#include <string.h> 
+#include <string.h>
 
 #ifdef USE_BOOST_SERIAL_TRANSPORT
 #include "serial_transport.h"
@@ -12,7 +12,7 @@
 #include "serial_transport2.h"
 #endif
 
-BaseDriver* BaseDriver::instance = NULL;
+BaseDriver *BaseDriver::instance = NULL;
 
 BaseDriver::BaseDriver() : pn("~"), bdg(pn)
 {
@@ -28,10 +28,10 @@ BaseDriver::BaseDriver() : pn("~"), bdg(pn)
     frame = boost::make_shared<Simple_dataframe>(trans.get());
 
     ROS_INFO("[KUBOT]base driver startup...");
-    if (trans->init()) 
+    if (trans->init())
     {
         ROS_INFO("[KUBOT]connected to main board");
-    } 
+    }
     else
     {
         ROS_ERROR("[KUBOT]oops!!! can't connect to main board, please check the usb connection or baudrate!");
@@ -40,17 +40,18 @@ BaseDriver::BaseDriver() : pn("~"), bdg(pn)
 
     ros::Duration(3).sleep(); //wait for device
     ROS_INFO("[KUBOT]wait for device...");
-    
+
     frame->init();
 
-    for (int i=0;i<3;i++) {
+    for (int i = 0; i < 3; i++)
+    {
         if (frame->interact(ID_GET_VERSION))
             break;
         ros::Duration(2).sleep(); //wait for device
     }
 
     ROS_INFO("[KUBOT]robot version:%s build time:%s", Data_holder::get()->firmware_info.version,
-                                        Data_holder::get()->firmware_info.time);
+             Data_holder::get()->firmware_info.time);
 
     init_robot_ip();
 
@@ -62,10 +63,9 @@ BaseDriver::BaseDriver() : pn("~"), bdg(pn)
 
     init_imu();
 
- //TODO   init_led_status();
+    //TODO   init_led_status();
 
     init_robot_status();
-
 }
 
 BaseDriver::~BaseDriver()
@@ -91,32 +91,22 @@ void BaseDriver::init_cmd_odom()
     odom_pub = nh.advertise<nav_msgs::Odometry>(bdg.odom_topic, 50);
 
     //init odom_trans
-    odom_trans.header.frame_id = bdg.odom_frame;  
-    odom_trans.child_frame_id = bdg.base_frame;  
+    odom_trans.header.frame_id = bdg.odom_frame;
+    odom_trans.child_frame_id = bdg.base_frame;
 
-    odom_trans.transform.translation.z = 0;  
+    odom_trans.transform.translation.z = 0;
 
     //init odom
-    odom.header.frame_id = bdg.odom_frame;  
+    odom.header.frame_id = bdg.odom_frame;
     odom.pose.pose.position.z = 0.0;
-    odom.child_frame_id = bdg.base_frame;  
-    odom.twist.twist.linear.y = 0;  
+    odom.child_frame_id = bdg.base_frame;
+    odom.twist.twist.linear.y = 0;
 
-    if (!bdg.publish_tf) 
+    if (!bdg.publish_tf)
     {
-        odom.pose.covariance =  boost::assign::list_of(1e-3) (0) (0)  (0)  (0)  (0)
-                                                    (0) (1e-3)  (0)  (0)  (0)  (0)
-                                                    (0)   (0)  (1e6) (0)  (0)  (0)
-                                                    (0)   (0)   (0) (1e6) (0)  (0)
-                                                    (0)   (0)   (0)  (0) (1e6) (0)
-                                                    (0)   (0)   (0)  (0)  (0)  (1e3) ;
-    
-        odom.twist.covariance =  boost::assign::list_of(1e-3) (0)   (0)  (0)  (0)  (0)
-                                                    (0) (1e-3)  (0)  (0)  (0)  (0)
-                                                    (0)   (0)  (1e6) (0)  (0)  (0)
-                                                    (0)   (0)   (0) (1e6) (0)  (0)
-                                                    (0)   (0)   (0)  (0) (1e6) (0)
-                                                    (0)   (0)   (0)  (0)  (0)  (1e3) ; 
+        odom.pose.covariance = boost::assign::list_of(1e-3)(0)(0)(0)(0)(0)(0)(1e-3)(0)(0)(0)(0)(0)(0)(1e6)(0)(0)(0)(0)(0)(0)(1e6)(0)(0)(0)(0)(0)(0)(1e6)(0)(0)(0)(0)(0)(0)(1e3);
+
+        odom.twist.covariance = boost::assign::list_of(1e-3)(0)(0)(0)(0)(0)(0)(1e-3)(0)(0)(0)(0)(0)(0)(1e6)(0)(0)(0)(0)(0)(0)(1e6)(0)(0)(0)(0)(0)(0)(1e6)(0)(0)(0)(0)(0)(0)(1e3);
     }
 
     need_update_speed = false;
@@ -145,12 +135,12 @@ void BaseDriver::init_led_status()
 
 void BaseDriver::init_pid_debug()
 {
-    if (bdg.out_pid_debug_enable) 
+    if (bdg.out_pid_debug_enable)
     {
-        const char* input_topic_name[MAX_MOTOR_COUNT]={"motor1_input", "motor2_input", "motor3_input", "motor4_input"};
-        const char* output_topic_name[MAX_MOTOR_COUNT]={"motor1_output", "motor2_output", "motor3_output", "motor4_output"};
+        const char *input_topic_name[MAX_MOTOR_COUNT] = {"motor1_input", "motor2_input", "motor3_input", "motor4_input"};
+        const char *output_topic_name[MAX_MOTOR_COUNT] = {"motor1_output", "motor2_output", "motor3_output", "motor4_output"};
         for (size_t i = 0; i < MAX_MOTOR_COUNT; i++)
-         {
+        {
             pid_debug_pub_input[i] = nh.advertise<std_msgs::Int32>(input_topic_name[i], 1000);
             pid_debug_pub_output[i] = nh.advertise<std_msgs::Int32>(output_topic_name[i], 1000);
         }
@@ -168,8 +158,8 @@ void BaseDriver::init_imu()
 
 void BaseDriver::read_param()
 {
-    Robot_parameter* param = &Data_holder::get()->parameter;
-    memset(param,0, sizeof(Robot_parameter));
+    Robot_parameter *param = &Data_holder::get()->parameter;
+    memset(param, 0, sizeof(Robot_parameter));
 
     frame->interact(ID_GET_ROBOT_PARAMTER);
 
@@ -178,13 +168,13 @@ void BaseDriver::read_param()
     bdg.SetRobotParameters();
 }
 
-void BaseDriver::cmd_vel_callback(const geometry_msgs::Twist& vel_cmd)
+void BaseDriver::cmd_vel_callback(const geometry_msgs::Twist &vel_cmd)
 {
     ROS_INFO_STREAM("cmd_vel:[" << vel_cmd.linear.x << " " << vel_cmd.linear.y << " " << vel_cmd.angular.z << "]");
 
-    Data_holder::get()->velocity.v_liner_x = vel_cmd.linear.x*100;
-    Data_holder::get()->velocity.v_liner_y = vel_cmd.linear.y*100;
-    Data_holder::get()->velocity.v_angular_z = vel_cmd.angular.z*100;
+    Data_holder::get()->velocity.v_liner_x = vel_cmd.linear.x * 100;
+    Data_holder::get()->velocity.v_liner_y = vel_cmd.linear.y * 100;
+    Data_holder::get()->velocity.v_angular_z = vel_cmd.angular.z * 100;
 
     need_update_speed = true;
 }
@@ -204,18 +194,17 @@ void BaseDriver::led_status_callback(const kubot_msgs::RawLed& led_status)
 }
 */
 
-
 void BaseDriver::init_robot_status()
 {
     raw_robot_status_pub = nh.advertise<kubot_msgs::RawRobot>("raw_robot_status_msgs", 50);
     raw_robot_status_msgs.header.frame_id = "robot_snesor";
 }
 
-
 void BaseDriver::work_loop()
 {
     ros::Rate loop(bdg.freq);
-    while (ros::ok()) {
+    while (ros::ok())
+    {
         //boost::posix_time::ptime my_posix_time = ros::Time::now().toBoost();
         update_param();
 
@@ -224,30 +213,26 @@ void BaseDriver::work_loop()
         update_pid_debug();
 
         update_speed();
-		
-        if (Data_holder::get()->parameter.imu_type == IMU_TYPE_MPU6050
-            || Data_holder::get()->parameter.imu_type == IMU_TYPE_GY85 
-            || Data_holder::get()->parameter.imu_type == IMU_TYPE_GY87
-            || Data_holder::get()->parameter.imu_type == IMU_TYPE_MPU9250
-            || Data_holder::get()->parameter.imu_type == IMU_TYPE_BMI160) 
-            {
+
+        if (Data_holder::get()->parameter.imu_type == IMU_TYPE_MPU6050 || Data_holder::get()->parameter.imu_type == IMU_TYPE_GY85 || Data_holder::get()->parameter.imu_type == IMU_TYPE_GY87 || Data_holder::get()->parameter.imu_type == IMU_TYPE_MPU9250 || Data_holder::get()->parameter.imu_type == IMU_TYPE_BMI160)
+        {
             update_imu();
         }
-		
-    //TODO    update_led_status();
+
+        //TODO    update_led_status();
 
         update_robot_status();
 
         loop.sleep();
 
-	    ros::spinOnce();
+        ros::spinOnce();
     }
 }
 
 void BaseDriver::update_param()
 {
 #ifdef USE_DYNAMIC_RECONFIG
-    if (bdg.get_param_update_flag()) 
+    if (bdg.get_param_update_flag())
     {
         frame->interact(ID_SET_ROBOT_PARAMTER);
         ros::Rate loop(5);
@@ -259,45 +244,45 @@ void BaseDriver::update_param()
 void BaseDriver::update_odom()
 {
     frame->interact(ID_GET_ODOM);
-    
-    ros::Time current_time = ros::Time::now(); 
 
-    float x = Data_holder::get()->odom.x*0.01;
-    float y = Data_holder::get()->odom.y*0.01;
-    float th = Data_holder::get()->odom.yaw*0.01;
+    ros::Time current_time = ros::Time::now();
 
-    float vxy = Data_holder::get()->odom.v_liner_x*0.01;
-    float vth = Data_holder::get()->odom.v_angular_z*0.01;
+    float x = Data_holder::get()->odom.x * 0.01;
+    float y = Data_holder::get()->odom.y * 0.01;
+    float th = Data_holder::get()->odom.yaw * 0.01;
+
+    float vxy = Data_holder::get()->odom.v_liner_x * 0.01;
+    float vth = Data_holder::get()->odom.v_angular_z * 0.01;
 
     //ROS_INFO("odom: x=%.2f y=%.2f th=%.2f vxy=%.2f vth=%.2f", x, y ,th, vxy,vth);
-    
+
     geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th);
 
     //publish_tf
     if (bdg.publish_tf)
-     {
-        odom_trans.header.stamp = current_time;  
-        odom_trans.transform.translation.x = x;  
-        odom_trans.transform.translation.y = y;  
-        odom_trans.transform.rotation = odom_quat; 
-        odom_broadcaster.sendTransform(odom_trans);  
+    {
+        odom_trans.header.stamp = current_time;
+        odom_trans.transform.translation.x = x;
+        odom_trans.transform.translation.y = y;
+        odom_trans.transform.rotation = odom_quat;
+        odom_broadcaster.sendTransform(odom_trans);
     }
 
-    //publish the message  
-    odom.header.stamp = current_time;  
-    odom.pose.pose.position.x = x;  
-    odom.pose.pose.position.y = y;  
-    odom.pose.pose.orientation = odom_quat;    
-    odom.twist.twist.linear.x = vxy;  
-    odom.twist.twist.angular.z = vth;  
-    
+    //publish the message
+    odom.header.stamp = current_time;
+    odom.pose.pose.position.x = x;
+    odom.pose.pose.position.y = y;
+    odom.pose.pose.orientation = odom_quat;
+    odom.twist.twist.linear.x = vxy;
+    odom.twist.twist.angular.z = vth;
+
     odom_pub.publish(odom);
 }
 
 void BaseDriver::update_speed()
 {
     if (need_update_speed)
-     {
+    {
         ROS_INFO_STREAM("update_speed");
         need_update_speed = !(frame->interact(ID_SET_VELOCITY));
     }
@@ -325,11 +310,11 @@ void BaseDriver::update_led_status()
 void BaseDriver::update_pid_debug()
 {
     if (bdg.out_pid_debug_enable)
-     {
+    {
         frame->interact(ID_GET_PID_DATA);
-        
+
         for (size_t i = 0; i < MAX_MOTOR_COUNT; i++)
-         {
+        {
             pid_debug_msg_input[i].data = Data_holder::get()->pid_data.input[i];
             pid_debug_msg_output[i].data = Data_holder::get()->pid_data.output[i];
 
@@ -346,14 +331,14 @@ void BaseDriver::update_imu()
 
     raw_imu_msgs.raw_linear_acceleration.x = Data_holder::get()->imu_data[0];
     raw_imu_msgs.raw_linear_acceleration.y = Data_holder::get()->imu_data[1];
-    raw_imu_msgs.raw_linear_acceleration.z= Data_holder::get()->imu_data[2];
+    raw_imu_msgs.raw_linear_acceleration.z = Data_holder::get()->imu_data[2];
     raw_imu_msgs.raw_angular_velocity.x = Data_holder::get()->imu_data[3];
     raw_imu_msgs.raw_angular_velocity.y = Data_holder::get()->imu_data[4];
     raw_imu_msgs.raw_angular_velocity.z = Data_holder::get()->imu_data[5];
     raw_imu_msgs.raw_magnetic_field.x = Data_holder::get()->imu_data[6];
     raw_imu_msgs.raw_magnetic_field.y = Data_holder::get()->imu_data[7];
     raw_imu_msgs.raw_magnetic_field.z = Data_holder::get()->imu_data[8];
-    
+
     raw_imu_pub.publish(raw_imu_msgs);
 }
 
@@ -380,4 +365,3 @@ void BaseDriver::update_robot_status()
 
     raw_robot_status_pub.publish(raw_robot_status_msgs);
 }
-

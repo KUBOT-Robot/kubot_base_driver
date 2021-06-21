@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
     ros::init(argc, argv, "kubot_driver");
-    
+
     BaseDriver::Instance()->work_loop();
 
     ros::spin();

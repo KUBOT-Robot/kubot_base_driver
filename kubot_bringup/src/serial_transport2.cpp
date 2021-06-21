@@ -1,7 +1,7 @@
 #include "serial_transport2.h"
 #include <ros/ros.h>
 
-Serial_transport2::Serial_transport2(std::string port, int32_t baudrate) : m_port(port), m_baudrate(baudrate), m_timeout_us(150*1000)
+Serial_transport2::Serial_transport2(std::string port, int32_t baudrate) : m_port(port), m_baudrate(baudrate), m_timeout_us(150 * 1000)
 {
     m_timeoutFlag = false;
 }
@@ -16,7 +16,8 @@ bool Serial_transport2::init()
 {
     ROS_INFO("[KUBOT]open %s %d", m_port.c_str(), m_baudrate);
     m_fd = ::open(m_port.c_str(), O_RDWR | O_NDELAY);
-    if (m_fd < 0) {
+    if (m_fd < 0)
+    {
         ROS_ERROR("[KUBOT]open %s err", m_port.c_str());
         return false;
     }
@@ -29,21 +30,26 @@ bool Serial_transport2::init()
     struct termios opt;
     tcgetattr(m_fd, &opt);
 
-    if (m_baudrate == 921600) {
+    if (m_baudrate == 921600)
+    {
         cfsetispeed(&opt, B921600);
         cfsetospeed(&opt, B921600);
-    } else if (m_baudrate == 1500000) {
+    }
+    else if (m_baudrate == 1500000)
+    {
         cfsetispeed(&opt, B1500000);
         cfsetospeed(&opt, B1500000);
-    } else { //if (m_baudrate == 115200) 
+    }
+    else
+    { //if (m_baudrate == 115200)
         cfsetispeed(&opt, B115200);
         cfsetospeed(&opt, B115200);
-    } 
+    }
 
     opt.c_cflag &= ~CSIZE | CS8;
     opt.c_cflag |= (CLOCAL | CREAD);
 
-    opt.c_cflag &= ~(PARENB|PARODD);
+    opt.c_cflag &= ~(PARENB | PARODD);
     opt.c_cflag &= ~CSTOPB;
 
     opt.c_cflag &= ~CRTSCTS;
@@ -57,21 +63,23 @@ bool Serial_transport2::init()
     opt.c_cc[VMIN] = 0;
     opt.c_cc[VTIME] = 0;
 
-    if((tcsetattr(m_fd, TCSANOW, &opt)) != 0)
+    if ((tcsetattr(m_fd, TCSANOW, &opt)) != 0)
         return false;
 
     int mcs = 0;
     ioctl(m_fd, TIOCMGET, &mcs);
     mcs |= TIOCM_RTS;
     ioctl(m_fd, TIOCMGET, &mcs);
-    
-    if (tcgetattr(m_fd, &opt)!=0) {
+
+    if (tcgetattr(m_fd, &opt) != 0)
+    {
         ROS_ERROR("tcsetattr failed");
     }
 
     opt.c_cflag &= ~CRTSCTS;
 
-    if (tcsetattr(m_fd, TCSANOW, &opt)!=0) {
+    if (tcsetattr(m_fd, TCSANOW, &opt) != 0)
+    {
         ROS_ERROR("tcsetattr failed");
     }
 
@@ -87,36 +95,43 @@ Buffer Serial_transport2::read()
     FD_SET(m_fd, &rfds);
     struct timeval tm;
     tm.tv_sec = 0;
-    tm.tv_usec=m_timeout_us;
+    tm.tv_usec = m_timeout_us;
 
     int retval = select(m_fd + 1, &rfds, NULL, NULL, &tm);
-    if (retval == -1 && errno == EINTR){
+    if (retval == -1 && errno == EINTR)
+    {
         ROS_ERROR("select failure");
         return data;
     }
-    if (retval < 0) {
+    if (retval < 0)
+    {
         ROS_ERROR("select failure");
         return data;
     }
 
-    if (!FD_ISSET(m_fd, &rfds)) {
+    if (!FD_ISSET(m_fd, &rfds))
+    {
         m_timeoutFlag = true;
         return data;
     }
 
     char buffer[256] = {0};
     int len = ::read(m_fd, buffer, sizeof(buffer));
-    if (len > 0){
+    if (len > 0)
+    {
         // printf("recv: ");
-        for (int i=0;i<len;i++) {
+        for (int i = 0; i < len; i++)
+        {
             data.push_back(buffer[i]);
             // printf("%02x ", (unsigned char)buffer[i]);
         }
         // printf("\r\n");
-    } else {
+    }
+    else
+    {
         ROS_INFO("read err %d", len);
     }
-    
+
     return data;
 }
 
@@ -132,7 +147,7 @@ void Serial_transport2::write(Buffer &data)
 
 void Serial_transport2::set_timeout(int t)
 {
-    m_timeout_us = t*1000;
+    m_timeout_us = t * 1000;
 }
 
 bool Serial_transport2::is_timeout()
