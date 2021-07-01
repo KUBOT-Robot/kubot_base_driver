@@ -312,7 +312,7 @@ void BaseDriver::update_robot_status()
 		raw_robot_status_msgs.mcu_voltage = Data_holder::get()->mcu_voltage.mcu_voltage;
 	}
 
-	raw_robot_status_msgs.sona1_dis = Data_holder::get()->robot_status.sona_data[0]
+	raw_robot_status_msgs.sona1_dis = Data_holder::get()->robot_status.sona_data[0];
 	raw_robot_status_msgs.sona2_dis = Data_holder::get()->robot_status.sona_data[1];
 	raw_robot_status_msgs.sona3_dis = Data_holder::get()->robot_status.sona_data[2];
 	raw_robot_status_msgs.sona4_dis = Data_holder::get()->robot_status.sona_data[3];
