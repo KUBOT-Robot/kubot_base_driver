@@ -27,6 +27,4 @@ private:
 	int32_t m_baudrate;
 };
 
-#endif
-
-//  KUBOT_TRANSPORT_SERIAL2_H_
+#endif /*  KUBOT_TRANSPORT_SERIAL2_H_ */

@@ -20,6 +20,7 @@
 #include "kubot_bringup/dataframe.h"
 #include <kubot_msgs/RawImu.h>
 #include <kubot_msgs/RawRobot.h>
+#include <kubot_msgs/RawSona.h>
 
 class BaseDriver
 {
@@ -41,7 +42,7 @@ private:
 	void cmd_vel_callback(const geometry_msgs::Twist& vel_cmd);
 	void init_cmd_odom();
 	void init_pid_debug();
-	void init_imu();
+
 
 	void init_param();
 	void read_param();
@@ -50,7 +51,6 @@ private:
 	void update_odom();
 	void update_speed();
 	void update_pid_debug();
-	void update_imu();
 
 public:
 	BaseDriverConfig& getBaseDriverConfig()
@@ -83,6 +83,7 @@ private:
 	geometry_msgs::TransformStamped odom_trans;
 	tf::TransformBroadcaster odom_broadcaster;
 
+	ros::Time begin = ros::Time::now();
 	ros::NodeHandle nh;
 	ros::NodeHandle pn;
 
@@ -97,15 +98,25 @@ private:
 
 	double last_cmd_vel_time;
 
+// Get IMU data...
+private:
+	void init_imu();
+	void update_imu();
 	kubot_msgs::RawImu raw_imu_msgs;
 	ros::Publisher raw_imu_pub;
-	ros::Publisher raw_mag_pub;
 
-	//顯示機器人IP相關
+// Display robot ip...
 private:
 	void init_robot_ip();
 
-	//獲取下位機機器人感測器狀態相關
+// Get ultrasonic data...
+private:
+	void init_sona_data();
+	void update_sona_data();
+	kubot_msgs::RawSona raw_sona_data_msgs;
+	ros::Publisher raw_sona_data_pub;
+
+// Get Driver Board status...
 private:
 	void init_robot_status();
 	void update_robot_status();
@@ -113,6 +124,4 @@ private:
 	ros::Publisher raw_robot_status_pub;
 };
 
-#endif
-
-// KUBOT_BASE_DRIVER_H_
+#endif /* KUBOT_BASE_DRIVER_H_ */

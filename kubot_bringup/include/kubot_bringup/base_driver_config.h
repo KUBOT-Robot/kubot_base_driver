@@ -35,7 +35,8 @@ public:
 
 	std::string port;
 	int32_t baudrate;
-	std::string robot_ip;
+
+
 
 	std::string base_frame;
 	std::string odom_frame;
@@ -45,7 +46,10 @@ public:
 
 	std::string cmd_vel_topic;
 	std::string odom_topic;
+
+	std::string robot_ip;
 	std::string robot_status_topic;
+	std::string sona_data_topic;
 
 	int32_t freq;
 
@@ -62,6 +66,4 @@ private:
 	bool set_flag;
 };
 
-#endif
-
-// KUBOT_BASE_DRIVER_CONFIG_H_
+#endif /* KUBOT_BASE_DRIVER_CONFIG_H_ */

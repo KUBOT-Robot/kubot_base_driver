@@ -108,9 +108,12 @@ bool Simple_dataframe::data_parse()
 		break;
 	case ID_SET_ROBOT_IP:
 		break;
+	case ID_GET_SONA_DATA:
+		memcpy(&dh->sona_data, active_rx_msg.data, sizeof(dh->sona_data));
+		break;
 	case ID_GET_ROBOT_STATUS:
 		memcpy(&dh->robot_status, active_rx_msg.data, sizeof(dh->robot_status));
-		break;
+		break;		
 	default:
 		break;
 	}
@@ -180,9 +183,12 @@ bool Simple_dataframe::interact(const MESSAGE_ID id)
 	case ID_SET_ROBOT_IP:
 		send_message(id, (unsigned char*)&dh->lcd_status, sizeof(dh->lcd_status));
 		break;
-	case ID_GET_ROBOT_STATUS:
+	case ID_GET_SONA_DATA:
 		send_message(id);
 		break;
+	case ID_GET_ROBOT_STATUS:
+		send_message(id);
+		break;		
 	default:
 		break;
 	}

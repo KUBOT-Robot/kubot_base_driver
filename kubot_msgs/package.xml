@@ -1,25 +1,26 @@
 <package>
-  <name>kubot_msgs</name>
-  <version>0.10.0</version>
-  <description>
-    Messages and Services definitions for the KUBOT.
-  </description>
+	<name>kubot_msgs</name>
+	<version>0.10.0</version>
+	<description>
+   Messages and Services definitions for the KUBOT.
+	</description>
+	<maintainer email="YunHong.Wang@ShanYangYe.com">Yun Hong</maintainer>
 
-  <author>KUBOT</author>
-  <!-- KUBOT ROS  -->
-  <maintainer email="t105408001@ntut.org.tw">Yun-Hong</maintainer>
+	<license>Apache 2.0</license>
 
-  <license>Apache-2.0</license>
-  
-  <buildtool_depend>catkin</buildtool_depend>
+	<!-- KUBOT ROS  -->
+	<author>KUBOT</author>
+	<author email="t105408001@ntut.org.tw">Yun Hong</author>
 
-  <build_depend>std_msgs</build_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>message_generation</build_depend>
+	<buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>std_msgs</run_depend>
-  <run_depend>geometry_msgs</run_depend>
-  <run_depend>message_runtime</run_depend>
+	<build_depend>std_msgs</build_depend>
+	<build_depend>geometry_msgs</build_depend>
+	<build_depend>message_generation</build_depend>
+
+	<run_depend>std_msgs</run_depend>
+	<run_depend>geometry_msgs</run_depend>
+	<run_depend>message_runtime</run_depend>
 </package>
 
 

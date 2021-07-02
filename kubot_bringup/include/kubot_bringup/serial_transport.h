@@ -71,6 +71,4 @@ private:
 	boost::shared_ptr<boost::asio::deadline_timer> timer_;
 };
 
-#endif
-
-//KUBOT_TRANSPORT_SERIAL_H_
+#endif /* KUBOT_TRANSPORT_SERIAL_H_ */

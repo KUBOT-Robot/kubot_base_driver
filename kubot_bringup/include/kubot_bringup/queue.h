@@ -11,6 +11,4 @@ public:
 	virtual unsigned short max_size() = 0;
 };
 
-#endif
-
-// KUBOT_QUEUE_H_
+#endif /* KUBOT_QUEUE_H_ */

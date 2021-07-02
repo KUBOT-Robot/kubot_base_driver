@@ -43,6 +43,4 @@ private:
 		 bool is_run;*/
 };
 
-#endif
-
-// KUBOT_SIMPLE_DATAFRAME_MASTER_H_
+#endif /* KUBOT_SIMPLE_DATAFRAME_MASTER_H_ */

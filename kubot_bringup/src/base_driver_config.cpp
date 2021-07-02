@@ -40,6 +40,7 @@ void BaseDriverConfig::init(Robot_parameter *r)
 	pn.param<std::string>("cmd_vel_topic", cmd_vel_topic, "cmd_vel");
 	pn.param<std::string>("odom_topic", odom_topic, "odom");
 	pn.param<std::string>("robot_status_topic", robot_status_topic, "robot_status");
+	pn.param<std::string>("sona_data_topic", sona_data_topic, "sona_data");
 
 	pn.param<int32_t>("freq", freq, 1000);
 }

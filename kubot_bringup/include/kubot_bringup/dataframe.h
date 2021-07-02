@@ -12,7 +12,8 @@ enum MESSAGE_ID
 	ID_GET_PID_DATA = 6,
 	ID_GET_IMU_DATA = 7,
 	ID_SET_ROBOT_IP = 8,
-	ID_GET_ROBOT_STATUS = 9,
+	ID_GET_SONA_DATA = 9,
+	ID_GET_ROBOT_STATUS = 10,
 	ID_MESSGAE_MAX
 };
 
@@ -32,6 +33,4 @@ public:
 	virtual bool interact(const MESSAGE_ID id) = 0;
 };
 
-#endif
-
-// KUBOT_DATAFRAME_H_
+#endif /*KUBOT_DATAFRAME_H_*/

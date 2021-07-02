@@ -62,8 +62,9 @@ BaseDriver::BaseDriver() : pn("~"), bdg(pn)
 
 	init_imu();
 
-	init_robot_status();
+	init_sona_data();
 
+	init_robot_status();
 }
 
 BaseDriver::~BaseDriver()
@@ -169,12 +170,17 @@ void BaseDriver::init_imu()
 	raw_imu_msgs.magnetometer = true;
 }
 
+void BaseDriver::init_sona_data()
+{
+	raw_sona_data_pub = nh.advertise<kubot_msgs::RawSona>("raw_sona_data_msgs", 50);
+	raw_robot_status_msgs.header.frame_id = "sona_data";
+}
+
 void BaseDriver::init_robot_status()
 {
 	raw_robot_status_pub = nh.advertise<kubot_msgs::RawRobot>("raw_robot_status_msgs", 50);
-	raw_robot_status_msgs.header.frame_id = "robot_snesor";
+	raw_robot_status_msgs.header.frame_id = "robot_status";
 }
-
 
 void BaseDriver::work_loop()
 {
@@ -199,6 +205,8 @@ void BaseDriver::work_loop()
 		}
 
 		update_robot_status();
+
+		update_sona_data();
 
 		loop.sleep();
 
@@ -300,26 +308,38 @@ void BaseDriver::update_imu()
 	raw_imu_pub.publish(raw_imu_msgs);
 }
 
+void BaseDriver::update_sona_data() {
+	frame->interact(ID_GET_SONA_DATA);
+	raw_sona_data_msgs.header.stamp = ros::Time::now();
+
+	raw_sona_data_msgs.sona1_dis = Data_holder::get()->sona_data[0];
+	raw_sona_data_msgs.sona2_dis = Data_holder::get()->sona_data[1];
+	raw_sona_data_msgs.sona3_dis = Data_holder::get()->sona_data[2];
+	raw_sona_data_msgs.sona4_dis = Data_holder::get()->sona_data[3];
+	raw_sona_data_msgs.sona5_dis = Data_holder::get()->sona_data[4];
+	raw_sona_data_msgs.sona6_dis = Data_holder::get()->sona_data[5];
+	raw_sona_data_msgs.sona7_dis = Data_holder::get()->sona_data[6];
+	raw_sona_data_msgs.sona8_dis = Data_holder::get()->sona_data[7];
+
+	raw_sona_data_pub.publish(raw_sona_data_msgs);
+}
+
+int UPDATE_ROBOT_STATUS_INTERVAL = 1;
 void BaseDriver::update_robot_status()
 {
-	frame->interact(ID_GET_ROBOT_STATUS);
-	raw_robot_status_msgs.header.stamp = ros::Time::now();
+	static int last_millis = 0;
+	if (ros::Time::now().toSec() - last_millis > UPDATE_ROBOT_STATUS_INTERVAL) {
+		frame->interact(ID_GET_ROBOT_STATUS);
+		raw_robot_status_msgs.header.stamp = ros::Time::now();
 
-	raw_robot_status_msgs.bumper_status = Data_holder::get()->robot_status.bumper_status;
+		raw_robot_status_msgs.bumper_status = Data_holder::get()->robot_status.bumper_status;
 
-	if (bdg.mcu_battery_volatge)
-	{
-		raw_robot_status_msgs.mcu_voltage = Data_holder::get()->mcu_voltage.mcu_voltage;
+		if (bdg.mcu_battery_volatge)
+		{
+			raw_robot_status_msgs.mcu_voltage = Data_holder::get()->mcu_voltage.mcu_voltage;
+		}
+
+		raw_robot_status_pub.publish(raw_robot_status_msgs);
+		last_millis = ros::Time::now().toSec();
 	}
-
-	raw_robot_status_msgs.sona1_dis = Data_holder::get()->robot_status.sona_data[0];
-	raw_robot_status_msgs.sona2_dis = Data_holder::get()->robot_status.sona_data[1];
-	raw_robot_status_msgs.sona3_dis = Data_holder::get()->robot_status.sona_data[2];
-	raw_robot_status_msgs.sona4_dis = Data_holder::get()->robot_status.sona_data[3];
-	raw_robot_status_msgs.sona5_dis = Data_holder::get()->robot_status.sona_data[4];
-	raw_robot_status_msgs.sona6_dis = Data_holder::get()->robot_status.sona_data[5];
-	raw_robot_status_msgs.sona7_dis = Data_holder::get()->robot_status.sona_data[6];
-	raw_robot_status_msgs.sona8_dis = Data_holder::get()->robot_status.sona_data[7];
-
-	raw_robot_status_pub.publish(raw_robot_status_msgs);
 }

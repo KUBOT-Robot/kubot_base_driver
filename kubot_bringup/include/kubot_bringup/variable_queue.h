@@ -70,6 +70,4 @@ bool VQueue<MAX_SIZE>::get(unsigned char& ch)
 	return true;
 }
 
-#endif
-
-// KUBOT_VARIABLE_QUEUE_H_
+#endif /* KUBOT_VARIABLE_QUEUE_H_ */

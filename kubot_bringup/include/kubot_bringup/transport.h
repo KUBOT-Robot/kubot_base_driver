@@ -25,6 +25,4 @@ public:
 	virtual void write(Buffer &data) = 0;
 };
 
-#endif
-
-// KUBOT_TRANSPORT_H_
+#endif /* KUBOT_TRANSPORT_H_ */

@@ -4,9 +4,10 @@ project(kubot_msgs)
 find_package(catkin REQUIRED COMPONENTS message_generation std_msgs geometry_msgs)
 
 add_message_files(FILES
-                  RawImu.msg
-		  RawLed.msg
-          RawRobot.msg
+      RawImu.msg
+		RawLed.msg
+      RawRobot.msg
+		RawSona.msg
                  )
 
 generate_messages(DEPENDENCIES std_msgs geometry_msgs)

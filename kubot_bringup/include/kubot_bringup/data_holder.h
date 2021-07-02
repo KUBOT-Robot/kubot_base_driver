@@ -108,9 +108,8 @@ struct Robot_imu
    };
 };
 
-struct Robot_status
+struct Robot_sona
 {
-   bool bumper_status;	// Robot bumper status (true is collision!)
    union
    {
       unsigned char sona_data[8];   // The sensor returns data of each ultrasonic (mm). 
@@ -126,7 +125,11 @@ struct Robot_status
          unsigned char sona8_data;
       } sona;
    };
+};
 
+struct Robot_status
+{
+   unsigned char bumper_status;	// Robot bumper status (true is collision!)
 };
 
 struct Robot_lcd_status
@@ -138,12 +141,6 @@ struct Robot_lcd_status
 struct Robot_mcu_voltage
 {
    unsigned short mcu_voltage;	// Driver board voltage (V).
-};
-
-struct RObot_status
-{
-   struct Robot_bumper;
-   struct Robot_sona_sensor;
 };
 
 #pragma pack(0)
@@ -171,10 +168,10 @@ private:
       memset(&odom, 0, sizeof(struct Robot_odom));
       memset(&pid_data, 0, sizeof(struct Robot_pid_data));
       memset(&imu_data, 0, sizeof(imu_data));
+      memset(&sona_data, 0, sizeof(sona_data));
       memset(&robot_status, 0, sizeof(struct Robot_status));
       memset(&lcd_status, 0, sizeof(struct Robot_lcd_status));
       memset(&mcu_voltage, 0, sizeof(struct Robot_mcu_voltage));
-      memset(&sona_data, 0, sizeof(sona_data));
    }
 
 public:
@@ -184,10 +181,10 @@ public:
    struct Robot_odom odom;
    struct Robot_pid_data pid_data;
    float imu_data[9];
+   float sona_data[8];
    struct Robot_status robot_status;
    struct Robot_lcd_status lcd_status;
    struct Robot_mcu_voltage mcu_voltage;
-   float sona_data[8];
 };
 
 #endif /* KUBOT_DATA_HOLDER_H_ */
