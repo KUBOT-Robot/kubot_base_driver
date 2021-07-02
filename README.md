@@ -14,12 +14,12 @@
 Only driver board control, and the basic motion control message of the KOBOT Robot will be generated. More information please refer to [kubot wiki](https://github.com/KUBOT-Robot/kubot_ros/wiki)-base driver.
 
 # Repository Contents
-- [ ] kubot_bringup
-	- [ ] [bringup.launch](https://github.com/KUBOT-Robot/kubot_ros/wiki/2.1-kubot_bringup)
-	- [ ] [bringup_with_ekf.launch](https://github.com/KUBOT-Robot/kubot_ros/wiki/2.2-kubot_bringup_ekf)
-	- [ ] [robot.launch](https://github.com/KUBOT-Robot/kubot_ros/wiki/2.3-kubot_robot)
-- [ ] kubot_imu
-- [ ] kubot_msgs
+- [x] kubot_bringup
+	- [x] [bringup.launch](https://github.com/KUBOT-Robot/kubot_ros/wiki/2.1-kubot_bringup)
+	- [x] [bringup_with_ekf.launch](https://github.com/KUBOT-Robot/kubot_ros/wiki/2.2-kubot_bringup_ekf)
+	- [x] [robot.launch](https://github.com/KUBOT-Robot/kubot_ros/wiki/2.3-kubot_robot)
+- [x] kubot_imu
+- [x] kubot_msgs
 
 # Install
 This will download the package of kubot_base_driver and install it.
