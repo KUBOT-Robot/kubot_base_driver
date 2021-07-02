@@ -76,9 +76,6 @@ struct Robot_odom   // Odometer calculated by Driver Board.
    short v_angular_z;	// Left is > 0, Right is < 0, cm/s.
    int32 x;   // Odometer X coordinate (cm).
    int32 y;   // Odometer Y coordinate (cm).
-   int32 z;   // Odometer Z coordinate (cm).
-   short roll;   // Odometer Roll coordinate (0.01 rad).
-   short pitch;   // Odometer Pitch coordinate (0.01 rad).
    short yaw;   // Odometer Yaw coordinate (0.01 rad).
 };
 

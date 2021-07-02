@@ -43,8 +43,6 @@ private:
 	void init_cmd_odom();
 	void init_pid_debug();
 
-
-	void init_param();
 	void read_param();
 
 	void update_param();
@@ -83,7 +81,6 @@ private:
 	geometry_msgs::TransformStamped odom_trans;
 	tf::TransformBroadcaster odom_broadcaster;
 
-	ros::Time begin = ros::Time::now();
 	ros::NodeHandle nh;
 	ros::NodeHandle pn;
 
