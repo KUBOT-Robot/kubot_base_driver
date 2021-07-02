@@ -129,7 +129,8 @@ struct Robot_sona
 
 struct Robot_status
 {
-   unsigned char bumper_status;	// Robot bumper status (true is collision!)
+   bool bumper_status;	// Robot bumper status (true is collision!)
+   unsigned short mcu_voltage; // Driver board voltage (V).
 };
 
 struct Robot_lcd_status
@@ -138,13 +139,9 @@ struct Robot_lcd_status
    char robot_ip[16];	// ROS IP. It will be displayed on the LCD panel on the robot.
 };
 
-struct Robot_mcu_voltage
-{
-   unsigned short mcu_voltage;	// Driver board voltage (V).
-};
-
 #pragma pack(0)
 
+// ALL DATA HOLDER 
 class Data_holder
 {
 public:
@@ -171,7 +168,6 @@ private:
       memset(&sona_data, 0, sizeof(sona_data));
       memset(&robot_status, 0, sizeof(struct Robot_status));
       memset(&lcd_status, 0, sizeof(struct Robot_lcd_status));
-      memset(&mcu_voltage, 0, sizeof(struct Robot_mcu_voltage));
    }
 
 public:
@@ -184,7 +180,6 @@ public:
    float sona_data[8];
    struct Robot_status robot_status;
    struct Robot_lcd_status lcd_status;
-   struct Robot_mcu_voltage mcu_voltage;
 };
 
 #endif /* KUBOT_DATA_HOLDER_H_ */
