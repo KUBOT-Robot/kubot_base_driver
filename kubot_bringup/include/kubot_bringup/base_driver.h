@@ -38,21 +38,6 @@ public:
 	~BaseDriver();
 	void work_loop();
 
-private:
-	void cmd_vel_callback(const geometry_msgs::Twist& vel_cmd);
-	void init_cmd_odom();
-	void init_pid_debug();
-
-
-	void init_param();
-	void read_param();
-
-	void update_param();
-	void update_odom();
-	void update_speed();
-	void update_pid_debug();
-
-public:
 	BaseDriverConfig& getBaseDriverConfig()
 	{
 		return bdg;
@@ -75,48 +60,64 @@ private:
 	boost::shared_ptr<Transport> trans;
 	boost::shared_ptr<Dataframe> frame;
 
-	ros::Subscriber cmd_vel_sub;
-
-	ros::Publisher odom_pub;
-
-	nav_msgs::Odometry odom;
-	geometry_msgs::TransformStamped odom_trans;
-	tf::TransformBroadcaster odom_broadcaster;
-
 	ros::Time begin = ros::Time::now();
 	ros::NodeHandle nh;
 	ros::NodeHandle pn;
 
-#define MAX_MOTOR_COUNT 4
+// Set robot parameter group
+private:
+	void init_param();
+	void read_param();
+	void update_param();
+
+// Set Cmd_vel group.
+private:
+	void cmd_vel_callback(const geometry_msgs::Twist& vel_cmd);
+	void update_speed();
+	ros::Subscriber cmd_vel_sub;
+	double last_cmd_vel_time;
+	bool need_update_speed;
+
+// Get Odometry data group.
+private:
+	void init_cmd_odom();
+	void update_odom();
+	nav_msgs::Odometry odom;
+	ros::Publisher odom_pub;
+	geometry_msgs::TransformStamped odom_trans;
+	tf::TransformBroadcaster odom_broadcaster;
+
+// Get Motor feedback group.
+private:
+	void init_pid_debug();
+	void update_pid_debug();
+
+	#define MAX_MOTOR_COUNT 4
+
 	ros::Publisher pid_debug_pub_input[MAX_MOTOR_COUNT];
 	ros::Publisher pid_debug_pub_output[MAX_MOTOR_COUNT];
-
 	std_msgs::Int32 pid_debug_msg_input[MAX_MOTOR_COUNT];
 	std_msgs::Int32 pid_debug_msg_output[MAX_MOTOR_COUNT];
 
-	bool need_update_speed;
-
-	double last_cmd_vel_time;
-
-// Get IMU data...
+// Get IMU data group.
 private:
 	void init_imu();
 	void update_imu();
 	kubot_msgs::RawImu raw_imu_msgs;
 	ros::Publisher raw_imu_pub;
 
-// Display robot ip...
+// Display robot ip group.
 private:
 	void init_robot_ip();
 
-// Get ultrasonic data...
+// Get Ultrasonic data group.
 private:
 	void init_sona_data();
 	void update_sona_data();
 	kubot_msgs::RawSona raw_sona_data_msgs;
 	ros::Publisher raw_sona_data_pub;
 
-// Get Driver Board status...
+// Get Driver Board status group.
 private:
 	void init_robot_status();
 	void update_robot_status();

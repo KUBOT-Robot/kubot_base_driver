@@ -33,10 +33,10 @@ private:
 public:
 	Robot_parameter* rp;
 
+	std::string robot_ip;
+	
 	std::string port;
 	int32_t baudrate;
-
-
 
 	std::string base_frame;
 	std::string odom_frame;
@@ -47,7 +47,6 @@ public:
 	std::string cmd_vel_topic;
 	std::string odom_topic;
 
-	std::string robot_ip;
 	std::string robot_status_topic;
 	std::string sona_data_topic;
 
