@@ -177,7 +177,7 @@ public:
    struct Robot_odom odom;
    struct Robot_pid_data pid_data;
    float imu_data[9];
-   float sona_data[8];
+   unsigned char sona_data[8];
    struct Robot_status robot_status;
    struct Robot_lcd_status lcd_status;
 };
