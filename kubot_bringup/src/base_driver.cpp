@@ -308,7 +308,8 @@ void BaseDriver::update_imu()
 	raw_imu_pub.publish(raw_imu_msgs);
 }
 
-void BaseDriver::update_sona_data() {
+void BaseDriver::update_sona_data() 
+{
 	frame->interact(ID_GET_SONA_DATA);
 	raw_sona_data_msgs.header.stamp = ros::Time::now();
 
