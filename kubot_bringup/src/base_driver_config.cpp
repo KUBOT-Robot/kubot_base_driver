@@ -19,7 +19,7 @@ void BaseDriverConfig::init(Robot_parameter *r)
 {
 	rp = r;
 
-	//comm param
+	// Comm param
 	pn.param<std::string>("port", port, "/dev/ttyACM0");
 	pn.param<int32_t>("baudrate", baudrate, 115200);
 	pn.param<std::string>("robot_ip", robot_ip, "192.168.172.1");
@@ -36,7 +36,7 @@ void BaseDriverConfig::init(Robot_parameter *r)
 	pn.param<bool>("mcu_battery_volatge", mcu_battery_volatge, false);
 	ROS_INFO("[KUBOT]mcu_battery_voltage:%d", mcu_battery_volatge);
 
-	//topic name param
+	// Topic name param
 	pn.param<std::string>("cmd_vel_topic", cmd_vel_topic, "cmd_vel");
 	pn.param<std::string>("odom_topic", odom_topic, "odom");
 	pn.param<std::string>("robot_status_topic", robot_status_topic, "robot_status");

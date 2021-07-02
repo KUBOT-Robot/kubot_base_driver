@@ -33,4 +33,4 @@ public:
 	virtual bool interact(const MESSAGE_ID id) = 0;
 };
 
-#endif /*KUBOT_DATAFRAME_H_*/
+#endif /* KUBOT_DATAFRAME_H_ */
