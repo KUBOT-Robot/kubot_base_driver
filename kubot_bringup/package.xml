@@ -3,7 +3,7 @@
 	<name>kubot_bringup</name>
 	<version>1.0.1</version>
 	<description>
-  The kubot robot bringup package
+  	The KUBOT Robot base driver package.
 	</description>
 	<maintainer email="YunHong.Wang@ShanYangYe.com">Yun Hong</maintainer>
 
