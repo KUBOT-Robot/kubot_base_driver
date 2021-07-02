@@ -142,7 +142,7 @@ void Serial_transport2::write(Buffer& data)
 	//     printf("%02x ", (unsigned char)data[i]);
 	// }
 	// printf("\r\n");
-	// ::write(m_fd, data.data(), data.size());
+	::write(m_fd, data.data(), data.size());
 }
 
 void Serial_transport2::set_timeout(int t)

@@ -3,9 +3,7 @@
 
 #include <string.h>
 #include <stdio.h>
-
 template <unsigned short MAX_SIZE = 256>
-
 class VQueue : public Queue
 {
 public:
