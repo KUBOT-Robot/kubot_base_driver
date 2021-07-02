@@ -30,6 +30,7 @@ add_executable(
   src/serial_transport.cpp
   src/serial_transport2.cpp
 )
+
 add_dependencies(kubot_driver ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(kubot_driver
   ${catkin_LIBRARIES}
