@@ -36,13 +36,12 @@ public:
 	std::string port;
 	int32_t baudrate;
 
-
-
 	std::string base_frame;
 	std::string odom_frame;
 
 	bool publish_tf;
-	//double ticks_per_meter;.
+	bool out_pid_debug_enable;
+	bool mcu_battery_volatge;
 
 	std::string cmd_vel_topic;
 	std::string odom_topic;
@@ -52,9 +51,6 @@ public:
 	std::string sona_data_topic;
 
 	int32_t freq;
-
-	bool out_pid_debug_enable;
-	bool mcu_battery_volatge;
 
 private:
 #ifdef USE_DYNAMIC_RECONFIG
