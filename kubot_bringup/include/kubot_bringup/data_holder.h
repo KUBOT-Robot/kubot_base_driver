@@ -127,7 +127,7 @@ struct Robot_sona
 struct Robot_status
 {
    bool bumper_status;	// Robot bumper status (true is collision!)
-   unsigned short mcu_voltage; // Driver board voltage (V).
+   float mcu_voltage; // Driver board voltage (V).
 };
 
 struct Robot_lcd_status
