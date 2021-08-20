@@ -1,3 +1,3 @@
 Header header
 bool bumper_status
-uint8 mcu_voltage
+float32 mcu_voltage
