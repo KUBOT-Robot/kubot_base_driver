@@ -26,7 +26,7 @@ This will download the package of kubot_base_driver and install it.
 
 ```sh
 cd ~/kubot_ros/ros_ws/src
-git clone https://github.com/KUBOT-Robot/kubot_base_driver.git
+git clone https://github.com/KUBOT-Robot/kubot_base_driver.git -b kinetic-devel
 cd ..
 catkin_make
 source ~/.bashrc
