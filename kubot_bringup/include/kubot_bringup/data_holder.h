@@ -109,17 +109,17 @@ struct Robot_sona
 {
    union
    {
-      unsigned char sona_data[8];   // The sensor returns data of each ultrasonic (mm). 
+      unsigned short sona_data[8];   // The sensor returns data of each ultrasonic (mm). 
       struct
       {
-         unsigned char sona1_data;
-         unsigned char sona2_data;
-         unsigned char sona3_data;
-         unsigned char sona4_data;
-         unsigned char sona5_data;
-         unsigned char sona6_data;
-         unsigned char sona7_data;
-         unsigned char sona8_data;
+         unsigned short sona1_data;
+         unsigned short sona2_data;
+         unsigned short sona3_data;
+         unsigned short sona4_data;
+         unsigned short sona5_data;
+         unsigned short sona6_data;
+         unsigned short sona7_data;
+         unsigned short sona8_data;
       } sona;
    };
 };
@@ -174,7 +174,7 @@ public:
    struct Robot_odom odom;
    struct Robot_pid_data pid_data;
    float imu_data[9];
-   unsigned char sona_data[8];
+   unsigned short sona_data[8];
    struct Robot_status robot_status;
    struct Robot_lcd_status lcd_status;
 };

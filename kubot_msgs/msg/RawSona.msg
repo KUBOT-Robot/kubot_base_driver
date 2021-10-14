@@ -1,9 +1,9 @@
 Header header
-uint8 sona1_dis
-uint8 sona2_dis
-uint8 sona3_dis
-uint8 sona4_dis
-uint8 sona5_dis
-uint8 sona6_dis
-uint8 sona7_dis
-uint8 sona8_dis
+uint16 sona1_dis
+uint16 sona2_dis
+uint16 sona3_dis
+uint16 sona4_dis
+uint16 sona5_dis
+uint16 sona6_dis
+uint16 sona7_dis
+uint16 sona8_dis
