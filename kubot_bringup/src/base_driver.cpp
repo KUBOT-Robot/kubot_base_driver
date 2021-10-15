@@ -308,21 +308,28 @@ void BaseDriver::update_imu()
 	raw_imu_pub.publish(raw_imu_msgs);
 }
 
-void BaseDriver::update_sona_data() 
+int UPDATE_SONA_STATUS_INTERVAL = 1;
+void BaseDriver::update_sona_data()
 {
-	frame->interact(ID_GET_SONA_DATA);
-	raw_sona_data_msgs.header.stamp = ros::Time::now();
+	static int last_millis = 0;
 
-	raw_sona_data_msgs.sona1_dis = Data_holder::get()->sona_data[0];
-	raw_sona_data_msgs.sona2_dis = Data_holder::get()->sona_data[1];
-	raw_sona_data_msgs.sona3_dis = Data_holder::get()->sona_data[2];
-	raw_sona_data_msgs.sona4_dis = Data_holder::get()->sona_data[3];
-	raw_sona_data_msgs.sona5_dis = Data_holder::get()->sona_data[4];
-	raw_sona_data_msgs.sona6_dis = Data_holder::get()->sona_data[5];
-	raw_sona_data_msgs.sona7_dis = Data_holder::get()->sona_data[6];
-	raw_sona_data_msgs.sona8_dis = Data_holder::get()->sona_data[7];
+	if (ros::Time::now().toSec() - last_millis > UPDATE_SONA_STATUS_INTERVAL) {
 
-	raw_sona_data_pub.publish(raw_sona_data_msgs);
+		frame->interact(ID_GET_SONA_DATA);
+		raw_sona_data_msgs.header.stamp = ros::Time::now();
+
+		raw_sona_data_msgs.sona1_dis = Data_holder::get()->sona_data[0];
+		raw_sona_data_msgs.sona2_dis = Data_holder::get()->sona_data[1];
+		raw_sona_data_msgs.sona3_dis = Data_holder::get()->sona_data[2];
+		raw_sona_data_msgs.sona4_dis = Data_holder::get()->sona_data[3];
+		raw_sona_data_msgs.sona5_dis = Data_holder::get()->sona_data[4];
+		raw_sona_data_msgs.sona6_dis = Data_holder::get()->sona_data[5];
+		raw_sona_data_msgs.sona7_dis = Data_holder::get()->sona_data[6];
+		raw_sona_data_msgs.sona8_dis = Data_holder::get()->sona_data[7];
+
+		raw_sona_data_pub.publish(raw_sona_data_msgs);
+		last_millis = ros::Time::now().toSec();
+	}
 }
 
 int UPDATE_ROBOT_STATUS_INTERVAL = 1;
