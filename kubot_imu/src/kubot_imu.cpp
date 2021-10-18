@@ -22,7 +22,6 @@ KubotIMU::KubotIMU(ros::NodeHandle nh, ros::NodeHandle pnh) :
 
 	if (use_accelerometer_ || use_gyroscope_)
 	{
-
 		if (!pnh_.getParam("imu/accelerometer_bias", acceleration_bias_) ||
 			!pnh_.getParam("imu/gyroscope_bias", gyroscope_bias_))
 		{
@@ -50,7 +49,6 @@ KubotIMU::KubotIMU(ros::NodeHandle nh, ros::NodeHandle pnh) :
 
 	if (use_magnetometer_)
 	{
-
 		// Magnetometer calibration values.
 		pnh_.param<double>("mag/x/min", mag_x_min_, -0.000078936);
 		pnh_.param<double>("mag/x/max", mag_x_max_, 0.000077924);

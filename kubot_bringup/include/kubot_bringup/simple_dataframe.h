@@ -23,7 +23,7 @@ struct Message
     unsigned char recv_count; //已經接收的字節數
 
     Message() {}
-    Message(unsigned char msg_id, unsigned char *data = 0, unsigned char len = 0)
+    Message(unsigned char msg_id, unsigned char* data = 0, unsigned char len = 0)
     {
         head.flag = FIX_HEAD;
         head.msg_id = msg_id;
@@ -33,7 +33,7 @@ struct Message
         if (data != 0 && len != 0)
             memcpy(this->data, data, len);
 
-        unsigned char *_send_buffer = (unsigned char *)this;
+        unsigned char* _send_buffer = (unsigned char*)this;
 
         unsigned int i = 0;
         for (i = 0; i < sizeof(head) + head.length; i++)

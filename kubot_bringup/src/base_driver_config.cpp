@@ -3,7 +3,7 @@
 
 #define PI 3.1415926f
 
-BaseDriverConfig::BaseDriverConfig(ros::NodeHandle &p) : pn(p)
+BaseDriverConfig::BaseDriverConfig(ros::NodeHandle& p) : pn(p)
 {
 #ifdef USE_DYNAMIC_RECONFIG
 	param_update_flag = false;
@@ -15,7 +15,7 @@ BaseDriverConfig::~BaseDriverConfig()
 {
 }
 
-void BaseDriverConfig::init(Robot_parameter *r)
+void BaseDriverConfig::init(Robot_parameter* r)
 {
 	rp = r;
 
@@ -49,8 +49,7 @@ void BaseDriverConfig::SetRobotParameters()
 {
 #ifdef USE_DYNAMIC_RECONFIG
 	static bool flag = true;
-	if (flag)
-	{
+	if (flag) {
 		flag = false;
 		f = boost::bind(&BaseDriverConfig::dynamic_callback, this, _1, _2);
 		server.setCallback(f);
@@ -59,7 +58,7 @@ void BaseDriverConfig::SetRobotParameters()
 }
 
 #ifdef USE_DYNAMIC_RECONFIG
-void BaseDriverConfig::dynamic_callback(kubot_bringup::kubot_driverConfig &config, uint32_t level)
+void BaseDriverConfig::dynamic_callback(kubot_bringup::kubot_driverConfig& config, uint32_t level)
 {
 	if (set_flag)
 	{

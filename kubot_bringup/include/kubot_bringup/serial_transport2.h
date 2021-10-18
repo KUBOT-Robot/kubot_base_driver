@@ -12,7 +12,7 @@ public:
 	bool init();
 	Buffer read();
 
-	void write(Buffer &data);
+	void write(Buffer& data);
 
 	void set_timeout(int t);
 	bool is_timeout();

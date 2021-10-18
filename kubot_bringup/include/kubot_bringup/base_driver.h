@@ -51,18 +51,15 @@ private:
 	void update_pid_debug();
 
 public:
-	BaseDriverConfig& getBaseDriverConfig()
-	{
+	BaseDriverConfig& getBaseDriverConfig() {
 		return bdg;
 	}
 
-	ros::NodeHandle* getNodeHandle()
-	{
+	ros::NodeHandle* getNodeHandle() {
 		return &nh;
 	}
 
-	ros::NodeHandle* getPrivateNodeHandle()
-	{
+	ros::NodeHandle* getPrivateNodeHandle() {
 		return &pn;
 	}
 
@@ -95,25 +92,25 @@ private:
 
 	double last_cmd_vel_time;
 
-// Get IMU data...
+	// Get IMU data...
 private:
 	void init_imu();
 	void update_imu();
 	kubot_msgs::RawImu raw_imu_msgs;
 	ros::Publisher raw_imu_pub;
 
-// Display robot ip...
+	// Display robot ip...
 private:
 	void init_robot_ip();
 
-// Get ultrasonic data...
+	// Get ultrasonic data...
 private:
 	void init_sona_data();
 	void update_sona_data();
 	kubot_msgs::RawSona raw_sona_data_msgs;
 	ros::Publisher raw_sona_data_pub;
 
-// Get Driver Board status...
+	// Get Driver Board status...
 private:
 	void init_robot_status();
 	void update_robot_status();

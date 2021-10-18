@@ -22,7 +22,7 @@ public:
 	virtual bool is_timeout() = 0;
 	virtual Buffer read() = 0;
 
-	virtual void write(Buffer &data) = 0;
+	virtual void write(Buffer& data) = 0;
 };
 
 #endif /* KUBOT_TRANSPORT_H_ */

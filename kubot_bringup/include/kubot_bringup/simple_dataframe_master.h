@@ -3,8 +3,6 @@
 
 #include "simple_dataframe.h"
 #include <string.h>
-//#include <boost/thread.hpp>
-//#include <boost/thread/lock_factories.hpp>
 
 class Transport;
 class Simple_dataframe : public Dataframe
@@ -13,8 +11,7 @@ public:
 	Simple_dataframe(Transport* trans = 0);
 	~Simple_dataframe();
 
-	void register_notify(const MESSAGE_ID id, Notify* _nf)
-	{
+	void register_notify(const MESSAGE_ID id, Notify* _nf) {
 	}
 
 	bool data_recv(unsigned char c);
@@ -35,12 +32,6 @@ private:
 
 	RECEIVE_STATE recv_state;
 	Transport* trans;
-
-	/* boost::thread* recv_thread;
-		 boost::condition cond_start_recv;
-		 boost::condition cond_end_recv;
-		 boost::mutex _lock;
-		 bool is_run;*/
 };
 
 #endif /* KUBOT_SIMPLE_DATAFRAME_MASTER_H_ */
