@@ -42,7 +42,7 @@ void BaseDriverConfig::init(Robot_parameter *r)
 	pn.param<std::string>("robot_status_topic", robot_status_topic, "robot_status");
 	pn.param<std::string>("sona_data_topic", sona_data_topic, "sona_data");
 
-	pn.param<int32_t>("freq", freq, 1000);
+	pn.param<int32_t>("freq", freq, 100);
 }
 
 void BaseDriverConfig::SetRobotParameters()
