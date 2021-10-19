@@ -12,20 +12,23 @@ public:
 	unsigned int parity;
 	unsigned int stopBits;
 
-	SerialParams() : serialPort(), baudRate(115200), flowControl(0), parity(0), stopBits(0)
+	SerialParams() :
+	serialPort(), baudRate(115200), flowControl(0), parity(0), stopBits(0)
 	{
 	}
 
 	SerialParams(
-		 std::string _serialPort,
-		 unsigned int _baudRate,
-		 unsigned int _flowControl,
-		 unsigned int _parity,
-		 unsigned int _stopBits) : serialPort(_serialPort),
-											baudRate(_baudRate),
-											flowControl(_flowControl),
-											parity(_parity),
-											stopBits(_stopBits)
+		std::string _serialPort,
+		unsigned int _baudRate,
+		unsigned int _flowControl,
+		unsigned int _parity,
+		unsigned int _stopBits
+	) :
+		serialPort(_serialPort),
+		baudRate(_baudRate),
+		flowControl(_flowControl),
+		parity(_parity),
+		stopBits(_stopBits)
 	{
 	}
 };
@@ -40,7 +43,7 @@ public:
 	bool is_timeout();
 	Buffer read();
 
-	void write(Buffer &data);
+	void write(Buffer& data);
 
 private:
 	boost::shared_ptr<boost::asio::serial_port> port_;
@@ -59,8 +62,8 @@ private:
 
 	void start_a_read();
 	void start_a_write();
-	void readHandler(const boost::system::error_code &ec, size_t bytesTransferred);
-	void writeHandler(const boost::system::error_code &ec);
+	void readHandler(const boost::system::error_code& ec, size_t bytesTransferred);
+	void writeHandler(const boost::system::error_code& ec);
 
 	std::queue<Buffer> write_buffer_;
 	std::queue<Buffer> read_buffer_;

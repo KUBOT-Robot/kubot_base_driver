@@ -16,8 +16,7 @@ bool Serial_transport2::init()
 {
 	ROS_INFO("[KUBOT]open %s %d", m_port.c_str(), m_baudrate);
 	m_fd = ::open(m_port.c_str(), O_RDWR | O_NDELAY);
-	if (m_fd < 0)
-	{
+	if (m_fd < 0) {
 		ROS_ERROR("[KUBOT]open %s err", m_port.c_str());
 		return false;
 	}
@@ -30,18 +29,15 @@ bool Serial_transport2::init()
 	struct termios opt;
 	tcgetattr(m_fd, &opt);
 
-	if (m_baudrate == 921600)
-	{
+	if (m_baudrate == 921600) {
 		cfsetispeed(&opt, B921600);
 		cfsetospeed(&opt, B921600);
 	}
-	else if (m_baudrate == 1500000)
-	{
+	else if (m_baudrate == 1500000) {
 		cfsetispeed(&opt, B1500000);
 		cfsetospeed(&opt, B1500000);
 	}
-	else
-	{ //if (m_baudrate == 115200)
+	else { //if (m_baudrate == 115200)
 		cfsetispeed(&opt, B115200);
 		cfsetospeed(&opt, B115200);
 	}
@@ -71,15 +67,13 @@ bool Serial_transport2::init()
 	mcs |= TIOCM_RTS;
 	ioctl(m_fd, TIOCMGET, &mcs);
 
-	if (tcgetattr(m_fd, &opt) != 0)
-	{
+	if (tcgetattr(m_fd, &opt) != 0) {
 		ROS_ERROR("tcsetattr failed");
 	}
 
 	opt.c_cflag &= ~CRTSCTS;
 
-	if (tcsetattr(m_fd, TCSANOW, &opt) != 0)
-	{
+	if (tcsetattr(m_fd, TCSANOW, &opt) != 0) {
 		ROS_ERROR("tcsetattr failed");
 	}
 
@@ -98,37 +92,31 @@ Buffer Serial_transport2::read()
 	tm.tv_usec = m_timeout_us;
 
 	int retval = select(m_fd + 1, &rfds, NULL, NULL, &tm);
-	if (retval == -1 && errno == EINTR)
-	{
-		ROS_ERROR("select failure");
+	if (retval == -1 && errno == EINTR) {
+		ROS_ERROR("select failure = -1 or errno");
 		return data;
 	}
-	if (retval < 0)
-	{
-		ROS_ERROR("select failure");
+	if (retval < 0) {
+		ROS_ERROR("select failure < 0");
 		return data;
 	}
 
-	if (!FD_ISSET(m_fd, &rfds))
-	{
+	if (!FD_ISSET(m_fd, &rfds)) {
 		m_timeoutFlag = true;
 		return data;
 	}
 
 	char buffer[256] = { 0 };
 	int len = ::read(m_fd, buffer, sizeof(buffer));
-	if (len > 0)
-	{
+	if (len > 0) {
 		// printf("recv: ");
-		for (int i = 0; i < len; i++)
-		{
+		for (int i = 0; i < len; i++) {
 			data.push_back(buffer[i]);
 			// printf("%02x ", (unsigned char)buffer[i]);
 		}
 		// printf("\r\n");
 	}
-	else
-	{
+	else {
 		ROS_INFO("read err %d", len);
 	}
 

@@ -52,4 +52,4 @@ public:
 	virtual ~KubotIMU(void) {};
 };
 
-#endif 
+#endif /* KUBOT_IMU_H_ */

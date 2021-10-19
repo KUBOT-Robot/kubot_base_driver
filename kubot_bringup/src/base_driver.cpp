@@ -28,25 +28,23 @@ BaseDriver::BaseDriver() : pn("~"), bdg(pn)
 	frame = boost::make_shared<Simple_dataframe>(trans.get());
 
 	ROS_INFO("[KUBOT]base driver startup...");
-	if (trans->init())
-	{
+	if (trans->init()) {
 		ROS_INFO("[KUBOT]connected to driver board");
 	}
-	else
-	{
+	else {
 		ROS_ERROR("[KUBOT]oops!!! can't connect to driver board, please check the usb connection or baudrate!");
 		return;
 	}
-
+/*
 	ros::Duration(3).sleep(); //wait for device
 	ROS_INFO("[KUBOT]wait for device...");
-
+*/
 	frame->init();
 
 	for (int i = 0;i < 3;i++) {
 		if (frame->interact(ID_GET_VERSION))
 			break;
-		ros::Duration(2).sleep(); //wait for device
+		ros::Duration(1).sleep(); //wait for device
 	}
 
 	ROS_INFO("[KUBOT]robot version:%s build time:%s", Data_holder::get()->firmware_info.version,
@@ -119,9 +117,6 @@ void BaseDriver::init_cmd_odom()
 	}
 
 	need_update_speed = false;
-
-	//ROS_INFO_STREAM("subscribe cmd topic on [correct_pos]");
-	//correct_pos_sub = nh.subscribe("correct_pos", 1000, &BaseDriver::correct_pos_callback, this);
 }
 
 void BaseDriver::cmd_vel_callback(const geometry_msgs::Twist& vel_cmd)
@@ -217,8 +212,7 @@ void BaseDriver::work_loop()
 void BaseDriver::update_param()
 {
 #ifdef USE_DYNAMIC_RECONFIG
-	if (bdg.get_param_update_flag())
-	{
+	if (bdg.get_param_update_flag()) {
 		frame->interact(ID_SET_ROBOT_PARAMTER);
 		ros::Rate loop(5);
 		loop.sleep();
@@ -266,8 +260,7 @@ void BaseDriver::update_odom()
 
 void BaseDriver::update_speed()
 {
-	if (need_update_speed)
-	{
+	if (need_update_speed) {
 		ROS_INFO_STREAM("update_speed");
 		need_update_speed = !(frame->interact(ID_SET_VELOCITY));
 	}

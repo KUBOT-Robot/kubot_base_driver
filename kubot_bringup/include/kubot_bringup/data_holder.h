@@ -9,7 +9,7 @@ using namespace std;
 
 typedef int int32;
 typedef short int16;
-typedef unsigned short unint16;
+typedef unsigned short uint16;
 
 enum IMU_TYPE
 {

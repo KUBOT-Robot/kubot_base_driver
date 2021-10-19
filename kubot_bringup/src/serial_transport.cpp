@@ -1,7 +1,8 @@
 #include "serial_transport.h"
 
-Serial_transport::Serial_transport(std::string port, int32_t baudrate) : write_buffer_(),
-read_buffer_()
+Serial_transport::Serial_transport(std::string port, int32_t baudrate) :
+	write_buffer_(),
+	read_buffer_()
 {
 	params_.serialPort = port;
 	params_.baudRate = baudrate;
@@ -24,13 +25,13 @@ void Serial_transport::start_a_read()
 		boost::bind(&Serial_transport::readHandler,
 			this,
 			boost::asio::placeholders::error,
-			boost::asio::placeholders::bytes_transferred));
+			boost::asio::placeholders::bytes_transferred
+		));
 }
 
 void Serial_transport::readHandler(const boost::system::error_code& ec, size_t bytesTransferred)
 {
-	if (ec)
-	{
+	if (ec) {
 		std::cerr << "Transport Serial read Error " << std::endl;
 		return;
 	}
@@ -45,8 +46,7 @@ void Serial_transport::start_a_write()
 {
 	boost::mutex::scoped_lock lock(port_mutex_);
 
-	if (!write_buffer_.empty())
-	{
+	if (!write_buffer_.empty()) {
 		boost::asio::async_write(*port_, boost::asio::buffer((write_buffer_.front())),
 			boost::bind(&Serial_transport::writeHandler, this, boost::asio::placeholders::error));
 		write_buffer_.pop();
@@ -55,8 +55,7 @@ void Serial_transport::start_a_write()
 
 void Serial_transport::writeHandler(const boost::system::error_code& ec)
 {
-	if (ec)
-	{
+	if (ec) {
 		std::cerr << "Transport Serial write Error " << std::endl;
 		return;
 	}
@@ -64,15 +63,14 @@ void Serial_transport::writeHandler(const boost::system::error_code& ec)
 	boost::mutex::scoped_lock lock(write_mutex_);
 
 	if (!write_buffer_.empty())
-		start_a_write();
+	start_a_write();
 }
 
 Buffer Serial_transport::read()
 {
 	boost::mutex::scoped_lock lock(read_mutex_);
 
-	if (!read_buffer_.empty())
-	{
+	if (!read_buffer_.empty()) {
 		Buffer data(read_buffer_.front());
 		read_buffer_.pop();
 		return data;
