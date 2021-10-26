@@ -3,7 +3,7 @@
     <arg name="publish_tf" default="true" doc="kubot driver publish_tf" />
     <arg name="robot_ip" default="$(env ROS_IP)" doc="kubot driver robot_ip" />
     <arg name="port" default="/dev/kubot" />
-    <arg name="freq" default="100" />
+    <arg name="freq" default="60" />
     
     <!-- KUBOT DRIVER -->
     <node name="kubot_driver" pkg="kubot_bringup" type="kubot_driver" output="screen">
@@ -18,6 +18,6 @@
         <param name="mcu_battery_volatge" value="true"/>
         <param name="port" value="$(arg port)" />
         <param name="publish_tf" value="$(arg publish_tf)" />
-        <param name="freq" value="100" />
+        <param name="freq" value="$(arg freq)" />
     </node>
 </launch>
