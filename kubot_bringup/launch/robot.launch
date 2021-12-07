@@ -21,4 +21,12 @@
 	<!-- 3D SENSOR -->
 	<include file="$(find kubot_3dsensor)/launch/$(arg sensor).launch"/>
 	<node pkg="web_video_server" type="web_video_server" name="web_video_server" unless="$(eval arg('sensor') == 'non-3dsensor')"/>
+
+	<!-- laser filter -->
+	<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+		<arg name="time" value="4" />
+		<arg name="pkg" value="kubot_lidar" />
+		<arg name="file" value="lidar_filter.launch" />
+		<arg name="value" value="arg1:=1.2" />
+	</include>
 </launch>
